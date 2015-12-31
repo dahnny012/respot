@@ -1,6 +1,0 @@
-{
-    "require": {
-        "mikecao/flight": "^1.2",
-        "mongodb/mongodb": "^1.0.0@beta"
-    }
-}
