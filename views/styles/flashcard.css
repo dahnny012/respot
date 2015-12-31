@@ -5,10 +5,11 @@
 }
 
 .flashcard {
-  height: 300px;  
+  height: 500px;  
   width: 500px; 
-  margin: 10% auto;                                              /* Centers the flashcard on the page */
+  margin: 10% auto;                                          /* Centers the flashcard on the page */
   border: 1px solid gray;                            /*  Border makes the animation easier to see. */
+  border-radius: 25px;
   box-shadow: 2px 2px 2px #000;
   -webkit-transform-style: preserve-3d;                                 /* Provides 3D perspective. */
   transition: all 0.3s;                                /* Slows down any transitions (e.g. rotation) */
@@ -23,12 +24,16 @@
 .front, .back {
   position: absolute;                    
   -webkit-backface-visibility: hidden;           /*  Hides back side of text (it's upside down) */
-  height: 300px;                                   /* Stretches side to inhabit full size of flashcard */
+  height: 500px;                                   /* Stretches side to inhabit full size of flashcard */
   width: 500px;
   text-align: center;                                                  
 }
 
-.front p, .back p {
-  margin-top: 25%;                                                      
+.front p {
+  margin-top: 40%;                                                      
   font-size: 3em;
+}
+
+.back .title {
+  font-size: 2.5em;
 }

@@ -3,8 +3,8 @@
     <head>
        <meta charset="UTF-8">
        <title>ReSpot</title>
-       <link rel="stylesheet" href="styles/flashcard.css"/>
-       <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+       <link rel="stylesheet" href="/views/styles/flashcard.css"/>
+       <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
        <script type="text/javascript">
            $(document).ready(function() {
@@ -19,10 +19,14 @@
          <div class="stage">
             <div class="flashcard">
               <div class="front">
-                <p>Front</p>
+                <p>leg·er·de·main</p>
               </div>
               <div class="back">
-                <p>Back</p>
+                  <div class="title">
+                      <p>legerdemain</p>
+                  </div>
+                <p>skillful use of one's hands when performing conjuring tricks.
+synonyms:	sleight of hand, conjuring, magic, wizardry</p>
               </div>
             </div>  
          </div>

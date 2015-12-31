@@ -31,9 +31,9 @@ Flight::route('/User', function(){
 
 
 
-Flight::route('test',function(){
-    Flight::render('test',array())
-})
+Flight::route('/test',function(){
+    Flight::render('test',array());
+});
 
 
 ?>
