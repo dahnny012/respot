@@ -1,7 +1,7 @@
 /*http://codrspace.com/kara/implementing-flashcard-flip-with-css3-transitions/ */
 
-.stage {
- -webkit-perspective: 1000;                   /* Sets up your viewpoint for seeing the animation */
+.stage{
+ -webkit-perspective: 1000;             /* Sets up your viewpoint for seeing the animation */
 }
 
 .flashcard {

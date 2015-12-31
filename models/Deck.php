@@ -1,11 +1,14 @@
 <?php 
 
 class Deck{
-    private $id;
-    private $name;
-    private $queue;
-    private $cards;
-    private $favorites;
+	
+	private $id;
+	public $acc_id;
+	public $acc_name;
+    public $name;
+    public $queue;
+    public $cards;
+    public $favorites;
     
     function __construct() {
 		$this->id=0;
