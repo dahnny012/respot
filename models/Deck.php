@@ -29,7 +29,7 @@ class Deck{
 		} 
 
 		// insert
-		$sql_query = 'INSERT INTO flashcards '.
+		$sql_query = 'INSERT INTO deck '.
 					 '(id, front, back) '.
 					 'VALUES '.
 					 '(\''.$this->id.'\', '.
