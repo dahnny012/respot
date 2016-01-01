@@ -3,7 +3,7 @@
 
 // This is a wrapper for DeckMongo
 function Deck(obj){
-    this.id = "";
+    this._id = "";
     this.username = "";
     this.score = "";
     this.queue = [];

@@ -1,7 +1,6 @@
 "use strict";
 
 function User(obj){
-    this.id = "";
     this.username = "";
     this.score = "";
     this.decks = [];

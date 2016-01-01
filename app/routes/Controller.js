@@ -4,10 +4,10 @@ function Controller(){
 
 }
 
-Controller.prototype.get=function(id){
+Controller.prototype.index=function(id){
     return "Mongo go get ID and cast it to certain type";
 }
-Controller.prototype.getAll = function(arrayIDs){
+Controller.prototype.retrieve = function(arrayIDs){
     return "Mongo go get all IDs and cast all of them to object type";
 }
 Controller.prototype.create = function(){
@@ -21,4 +21,8 @@ Controller.prototype.delete = function(){
 }
 
 
-module.exports = Controller;
+function ControllerFactory(){
+    return new Controller()
+}
+
+module.exports = ControllerFactory;

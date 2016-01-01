@@ -1,10 +1,20 @@
-// The router contains the db connection among other things
-// See Monk.js
+"use strict";
 
-function StudyController(router){
-    this.router = router;
+
+function StudyController(){
+    
 }
 
-module.exports = StudyController;
 
 
+StudyController.prototype.retrieve = function(req,ids){
+    var db = req.db;
+    var collection = db.get('respot');
+    return collection.find({
+        '_id': { $in: ids}
+    })
+}
+
+
+
+module.exports = StudyController

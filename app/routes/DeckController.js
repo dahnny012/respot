@@ -1,19 +1,34 @@
+"use strict";
+
 var Controller = require("./Controller");
 
-// The router contains the db connection among other things
-// Monk.js
-function DeckController(router){
-    this.router = router;
+function DeckController(){
+
 }
 
 
 
 DeckController.prototype = Controller;
-DeckController.prototype.get = function(){}
-DeckController.prototype.getAll = function(){}
-DeckController.prototype.update = function(){}
-DeckController.prototype.delete = function(){}
-DeckController.prototype.create = function(){}
+DeckController.prototype.index = function(){
+    
+}
+DeckController.prototype.retrieve = function(req,ids){
+    var db = req.db;
+    var collection = db.get('respot');
+    return collection.find({
+        '_id': { $in: ids}
+    })
+}
+    
+DeckController.prototype.update = function(){
+    
+}
+DeckController.prototype.delete = function(){
+    
+}
+DeckController.prototype.create = function(){
+    
+}
 
 
-module.exports = DeckController
+module.exports = DeckController;

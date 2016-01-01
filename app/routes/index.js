@@ -1,16 +1,32 @@
 var express = require('express');
 var router = express.Router();
 
+// Factories
 var UserControllerFactory = require("./UserController");
-var UserController = new UserControllerFactory();
+var DeckControllerFactory = require("./DeckController");
+var StudyControllerFactory = require("./StudyController");
+var FlashcardControllerFactory = require("./FlashcardController");
+
+
+// Singletons not really.
+
+
+var DeckController = new DeckControllerFactory();
+var StudyController = new StudyControllerFactory();
+var FlashcardController = new FlashcardControllerFactory();
+
+
+
+
+
 
 router.get('/deck', function(req, res, next) {
-    var controller = require("./DeckController")();
+    DeckController
 });
 
 
 router.get('/study', function(req, res, next) {
-    var controller = require("./StudyController")();
+    StudyController
     res.render('study', { title: 'Express' });
 });
 
@@ -18,30 +34,50 @@ router.get('/study',function(req,res,next){
     res.render('study',{title:'Express'});    
 })
 
-router.get('/user', function(req, res, next) {
-    var controller = require("./UserController")();
+router.get('/user/home', function(req, res, next) {
+    var UserController = new UserControllerFactory();
+    UserController.get(req,res,next);
 });
+
+
+router.get('/user/login', function(req, res, next) {
+    var POST = req.body;
+    res.render('user/login',{title:'Express'});   
+});
+
+router.post('/user/login', function(req, res, next) {
+    var UserController = new UserControllerFactory();
+    var POST = req.body;
+    UserController.login(req,res);
+});
+
+
 
 
 router.get('/user/register', function(req, res, next) {
-    res.render("register",{title:'Express'});
+    res.render("user/register",{"session":req.session});
 });
 
 router.post('/user/register', function(req, res, next) {
+    var UserController = new UserControllerFactory();
     var POST = req.body;
-    UserController.register(req,res);
+    UserController.create(req,res);
 });
 
 
 router.get('/flashcard', function(req, res, next) {
-    var controller = require("./FlashcardController")();
+    FlashcardController
 });
 
 
-// This is from a tutorial
-/* GET home page. */
+
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+    var UserController = new UserControllerFactory();
+  // User is Not Logged in.
+  if(!req.session.user)
+    res.render('index', { title: 'Respot' });
+  else
+    UserController.index(req,res);
 });
 
 module.exports = router;

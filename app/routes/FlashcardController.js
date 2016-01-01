@@ -2,8 +2,8 @@ var Controller = require("./Controller");
 
 
 
-function FlashcardController(router){
-    this.router = router;   
+function FlashcardController(){
+
 }
 
 
