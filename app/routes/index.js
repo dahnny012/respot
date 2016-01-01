@@ -1,23 +1,40 @@
 var express = require('express');
 var router = express.Router();
 
-
+var UserControllerFactory = require("./UserController");
+var UserController = new UserControllerFactory();
 
 router.get('/deck', function(req, res, next) {
-    var controller = require("./DeckController")(router);
+    var controller = require("./DeckController")();
 });
 
 
 router.get('/study', function(req, res, next) {
-    var controller = require("./StudyController")(router);
+    var controller = require("./StudyController")();
+    res.render('study', { title: 'Express' });
 });
+
+router.get('/study',function(req,res,next){
+    res.render('study',{title:'Express'});    
+})
 
 router.get('/user', function(req, res, next) {
-    var controller = require("./UserController")(router);
+    var controller = require("./UserController")();
 });
 
+
+router.get('/user/register', function(req, res, next) {
+    res.render("register",{title:'Express'});
+});
+
+router.post('/user/register', function(req, res, next) {
+    var POST = req.body;
+    UserController.register(req,res);
+});
+
+
 router.get('/flashcard', function(req, res, next) {
-    var controller = require("./FlashcardController")(router);
+    var controller = require("./FlashcardController")();
 });
 
 
@@ -25,19 +42,6 @@ router.get('/flashcard', function(req, res, next) {
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
-});
-
-
-// This is from a tutorial
-/* GET Userlist page. */
-router.get('/userlist', function(req, res) {
-    var db = req.db;
-    var collection = db.get('usercollection');
-    collection.find({},{},function(e,docs){
-        res.render('userlist', {
-            "userlist" : docs
-        });
-    });
 });
 
 module.exports = router;

@@ -12,4 +12,5 @@ function Side(){
 }
 
 
+
 module.exports = Flashcard;
