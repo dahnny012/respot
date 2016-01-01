@@ -6,3 +6,10 @@ body {
 a {
   color: #00B7FF;
 }
+
+
+li.deck-container{
+  display: inline; /* Shows each item side-by-side */
+  list-style-type: none; /* Gets rid of the bullet points */
+  float: left;
+}

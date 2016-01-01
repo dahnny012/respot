@@ -19,9 +19,26 @@ var FlashcardController = new FlashcardControllerFactory();
 
 
 
+// Courtesy of http://stackoverflow.com/a/11260389
+router.get('/deck/:mongoId([0-9a-f]{24})', function(req, res, next) {
+    if(req.session.user)
+        res.end("Yah ok.");
+    else
+        res.redirect("/");
+});
 
-router.get('/deck', function(req, res, next) {
-    DeckController
+router.get('/deck/new', function(req, res, next) {
+    if(req.session.user)
+        res.render('deck/new');
+    else
+        res.redirect("/");
+});
+
+router.post('/deck/new', function(req, res, next) {
+    if(req.session.user)
+        DeckController.newDeck(req,res);
+    else
+        res.redirect("/");
 });
 
 
@@ -60,7 +77,6 @@ router.get('/user/register', function(req, res, next) {
 
 router.post('/user/register', function(req, res, next) {
     var UserController = new UserControllerFactory();
-    var POST = req.body;
     UserController.create(req,res);
 });
 

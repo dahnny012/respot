@@ -3,12 +3,14 @@
 
 // This is a wrapper for DeckMongo
 function Deck(obj){
-    this._id = "";
-    this.username = "";
+    this.name = "";
+    this.description = "";
+    this.owner = ""
     this.score = "";
     this.queue = [];
     this.cards = [];
     this.favorites = [];
+    this.type = "deck"
     
     for (var prop in obj) this[prop] = obj[prop];
 }
