@@ -7,7 +7,6 @@ function Deck(obj){
     this.description = "";
     this.owner = ""
     this.score = "";
-    this.queue = [];
     this.cards = [];
     this.favorites = [];
     this.type = "deck"

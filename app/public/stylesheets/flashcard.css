@@ -38,19 +38,18 @@
   font-size: 2.5em;
 }
 
-.left {
+.determineFalse {
   position: absolute;
-  top: 0;
+
+  color: red;
   left: 5em;
   font-size: 5em;
 }
 
-.right {
-  display:flex;
-  justify-content:center;
-  align-items:flex-end;
+.determineTrue {
   position: absolute;
-  top: 10;
+  
+  color: green;
   right: 5em;
   font-size: 5em;
 }

@@ -12,21 +12,21 @@ var StudyControllerFactory = require("./StudyController");
 
 // Singletons not really.
 var DeckController = new DeckControllerFactory();
-var StudyController = new StudyControllerFactory();
 var async = require("async");
 
 
+var LOGINERROR = "Wrong Username/Password or it doesn't exist"
+var REGISTERERROR = "Account already exists"
 
 // The router contains the db connection among other things
 // See Monk.js
 
 function UserController(){
-    this.loginError = "Wrong Username/Password or it doesn't exist"
-    this.registerError = "Account already exists"
+
 }
 
 
-UserController.prototype = Controller;
+UserController.prototype = new Controller();
 
 // At this point they should be logged in.
 UserController.prototype.index = function(req,res){
@@ -36,32 +36,19 @@ UserController.prototype.index = function(req,res){
 
     // Dont be scared
     collection.findById(user._id,function(e,user){
-        // Retrieve the decks and srs items in parallel.
-        async.parallel([
-            function(callback){
-                DeckController.retrieve(req,user.decks).then(function(decks){
-                    user.decks = decks;
-                    callback();
-                })
-            },
-            function(callback){
-                StudyController.retrieve(req,user.srs).then(function(srs){
-                    user.srs = srs;
-                    callback();
-                })
-            }
-        ],function(err, results){
-            if(err){res.end("Error happened on our server");}
+        // Retrieve the deck.
+        DeckController.retrieve(req,user.decks).then(function(decks){
+            user.decks = decks;
             res.render("index",{user:user}); 
-        });
+        })
     });
 }
 
-UserController.prototype.update = function(){
-    return false;
+UserController.prototype.update = function(req,user){
+    
 }
 
-UserController.prototype.create = function(req,res,body){
+UserController.prototype.register = function(req,res,body){
     var POST = req.body;
     var SESSION = req.session;
     var db = req.db;
@@ -83,7 +70,7 @@ UserController.prototype.create = function(req,res,body){
                 res.redirect("/"); 
             })
         }else{
-            res.render("user/register",{"error":controller.registerError});
+            res.render("user/register",{"error":REGISTERERROR});
         }
     });
 }
@@ -93,7 +80,7 @@ UserController.prototype.login = function(req,res,body){
     var SESSION = req.session;
     var db = req.db;
     var collection = db.get('respot');
-    var controller = this;
+    var self = this;
     var registration = {"username":POST.user,"password":POST.pass}
     var user = {"username":POST.user,"type":"user"}
     collection.find(registration,function(e,docs){
@@ -105,7 +92,7 @@ UserController.prototype.login = function(req,res,body){
             })
         }else{
         // Login Unsuccessful
-        res.render("user/login",{"error":controller.loginError});
+        res.render("user/login",{"error":LOGINERROR});
         }
     });
 }

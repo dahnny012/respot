@@ -1,20 +1,12 @@
 "use strict";
 
+var Controller = require("./Controller");
 
 function StudyController(){
     
 }
 
 
-
-StudyController.prototype.retrieve = function(req,ids){
-    var db = req.db;
-    var collection = db.get('respot');
-    return collection.find({
-        '_id': { $in: ids}
-    })
-}
-
-
+StudyController.prototype = new Controller();
 
 module.exports = StudyController

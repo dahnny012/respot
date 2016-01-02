@@ -10,10 +10,13 @@ html
             h2 #{error}
 
         else
-            div.loginForm
+            div(class="modal fade", id="login-modal" tabindex="-1", role="dialog")
+              div.modal-dialog
+                div.loginmodal-container
+                h1 Login to Your Account
               form(name="register", action="/user/login", method="post")
-                p Enter a username:
-                 input(type='text', name='user')
-                p Enter a password: 
-                 input(type='password', name='pass')
-                input(type='submit', value="Login")
+                input(type='text', name='user' placeholder="Username")
+                input(type='password', name='pass' placeholder="Password")
+                input(type='submit', value="Login" name="login" class="login loginmodal-submit")
+
+				  

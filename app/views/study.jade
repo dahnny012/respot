@@ -6,14 +6,10 @@ html
         link(rel='stylesheet', href='/stylesheets/flashcard.css')
         
         script(src="https://code.jquery.com/jquery-latest.min.js")
+        // script(src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js")
         script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js", integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==", crossorigin="anonymous")
-        script.
-            $(document).ready(function() {
-              $('.flashcard').on('click', function() {
-                $('.flashcard').toggleClass('flipped');
-              });
-            });
-    
+        script(src="/javascripts/study.js")
+
     body 
         div(class='stage')
             div(class='flashcard')
@@ -25,11 +21,11 @@ html
                         p leg·er·de·main
                     p |  skillful use of one's hands when performing conjuring tricks.
                       |  synonyms:	sleight of hand, conjuring, magic, wizardry
-            div(class="buttons navbar-fixed-bottom")
+            div(class="navbar-fixed-bottom")
                 div(class="container")
-                    span(class="left")
+                    span(class="determineFalse")
                         span(class="glyphicon glyphicon-remove-circle")
-                    span(class="right")
+                    span(class="determineTrue")
                         span(class="glyphicon glyphicon-ok-circle")
                     
             

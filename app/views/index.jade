@@ -1,6 +1,6 @@
 html
     head
-        title=title
+        title=ReSpot
         link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", rel="stylesheet", integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==", crossorigin="anonymous")
         link(rel='stylesheet', href='/stylesheets/style.css')
         script(src="https://code.jquery.com/jquery-latest.min.js")
@@ -11,7 +11,7 @@ html
             h2 #{error}
             
         else
-          h1= title
+          h1 ReSpot
           p Welcome to ReSpot
           if user
             p Greetings #{user.username}
@@ -21,21 +21,19 @@ html
                 li(class="deck-container")
                   p Name(#{val.name})
                   p Description(#{val.description})
-                  p Review(#{val.queue.length})
-                  form(action="/card/add")
+                  p Review(#{user.srs[val._id].length})
+                  form(action="/deck/add/"+val._id)
                     input(type="submit" value="Add cards")
                   form(action="/deck/delete")
                     input(type="submit" value="Delete")
-                
             p
               form(action="/deck/new")
                 input(type="submit" value="Create a Deck")
             
           else
-            form(action="/user/login")
-                input(type="submit" value="login")
-            form(action="/user/register")
-                input(type="submit" value="register")
-  
-      
-  
+              a(Class="btn btn-primary" href="user/login") Login
+              //-because I'm a pleb and I don't want to add CSS for this for now.
+              br
+              br
+              a(Class="btn btn-primary" href="user/register") Register
+              

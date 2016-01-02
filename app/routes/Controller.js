@@ -1,5 +1,5 @@
 // Abstract controller
-// The router contains the db connection among other things
+
 function Controller(){
 
 }
@@ -7,12 +7,19 @@ function Controller(){
 Controller.prototype.index=function(){
 
 }
-Controller.prototype.retrieve = function(){
 
-}
 Controller.prototype.create = function(){
 
 }
+
+Controller.prototype.retrieve = function(req,ids){
+    var db = req.db;
+    var collection = db.get('respot');
+    return collection.find({
+        '_id': { $in: ids}
+    })
+}
+
 Controller.prototype.update = function(){
     
 }
