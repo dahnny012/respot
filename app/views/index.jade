@@ -1,6 +1,6 @@
 html
     head
-        title ReSpot
+        title ReSpot - Home
         link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", rel="stylesheet", integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==", crossorigin="anonymous")
         link(rel='stylesheet', href='/stylesheets/style.css')
         script(src="https://code.jquery.com/jquery-latest.min.js")
@@ -11,29 +11,38 @@ html
             h2 #{error}
             
         else
-          h1 ReSpot
-          p Welcome to ReSpot
-          if user
-            p Greetings #{user.username}
-            
-            ul
-              each val in user.decks
-                li(class="deck-container")
-                  p Name(#{val.name})
-                  p Description(#{val.description})
-                  p Review(#{user.srs[val._id].length})
-                  form(action="/deck/add/"+val._id)
-                    input(type="submit" value="Add cards")
-                  form(action="/deck/delete")
-                    input(type="submit" value="Delete")
-            p
-              form(action="/deck/new")
-                input(type="submit" value="Create a Deck")
-            
-          else
-              a(Class="btn btn-primary" href="user/login") Login
-              //-because I'm a pleb and I don't want to add CSS for this for now.
-              br
-              br
-              a(Class="btn btn-primary" href="user/register") Register
+        div.container
+           div.jumbotron
+              h1 ReSpot
+              if user 
+                h2 Hello, #{user.username}.
+                p Welcome to ReSpot! We hope you'll love it.
+
+              else
+                  p Firstly, please log In so we can send you on your way. 
+                  a(Class="btn btn-primary" href="user/login") Login
+                  //-because I'm a pleb and I don't want to add CSS for this for now.
+                  br
+                  br
+                  a(Class="btn btn-primary" href="user/register") Register
               
+            if user
+                each val in user.decks
+                  div(class="card")
+                    div(class="card-block")
+                      h4(class="card-title") Deck: (#{val.name})
+                      p(Class="card-text")
+                        Description(#{val.description})
+                      ul(class="list-group list-group-flush")
+                        li(class="list-group-item")
+                          | Number of Cards: #{val.cards.length}
+                        li(class="list-group-item")
+                          | To Review: #{user.srs[val._id].length}
+                        li(class="list-group-item")
+                          a(class="btn btn-primary" href="/deck/add/"+val._id) Add Cards
+                          a(class="btn btn-primary" href="/deck/new") Create a Deck
+                
+//- ul dis way to get the card ids....
+                      //-  each srs in user.srs[val._id]
+                      //-    li= moment(srs.timer).format("DD.MM.YYYY HH:MM:SS")
+                      

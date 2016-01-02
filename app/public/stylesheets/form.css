@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto);
+@import url(https://fonts.googleapis.com/css?family=Roboto);
 
 
 body {
@@ -39,10 +39,12 @@ body {
   position: relative;
 }
 
-.formmodal-container input[type=text], input[type=password] {
+
+.formmodal-container input[type=text], input[type=password], textarea {
   height: 44px;
   font-size: 16px;
   width: 100%;
+  max-width: 100%;
   margin-bottom: 10px;
   -webkit-appearance: none;
   background: #fff;

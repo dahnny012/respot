@@ -53,6 +53,14 @@ router.get('/study', function(req, res, next) {
     res.render('study');
 });
 
+router.get('/study/:deckID'+MongoIDRegex, function(req, res, next) {
+    // TODO is this the owner?!?
+        // Check if current user has the deck in their list of decks
+    if(req.session.user) StudyController.study(req,res);
+    else res.redirect("/")
+});
+
+
 
 router.get('/user/login', function(req, res, next) {
     res.render('user/login');   

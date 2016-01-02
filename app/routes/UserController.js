@@ -12,6 +12,7 @@ var StudyControllerFactory = require("./StudyController");
 
 // Singletons not really.
 var DeckController = new DeckControllerFactory();
+var StudyController = new StudyControllerFactory();
 var async = require("async");
 
 
@@ -34,14 +35,21 @@ UserController.prototype.index = function(req,res){
     var db = req.db;
     var collection = db.get('respot');
 
-    // Dont be scared
     collection.findById(user._id,function(e,user){
         // Retrieve the deck.
         DeckController.retrieve(req,user.decks).then(function(decks){
             user.decks = decks;
+            user.decks.forEach(function(e){
+                user.srs[e._id].sort(function(a,b){
+                    return new Date(a.timer) - new Date(b.timer);
+                });
+            })
             res.render("index",{user:user}); 
         })
     });
+    
+    
+    
 }
 
 UserController.prototype.update = function(req,user){

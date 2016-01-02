@@ -2,7 +2,6 @@ var userDetermined; //holds the user choice if user thinks is true or false
 
 function init()
 {
-    // $.mobile.loading().remove();
     $(".navbar-fixed-bottom").hide(); //hide buttons first
     
     userActionHandler('.determineFalse', false);
@@ -14,7 +13,7 @@ function init()
 function flipLogic()
 {
     $('.flashcard').on({
-        'click swipe' : function()
+        'click' : function()
             {
                  $('.flashcard').toggleClass('flipped').promise().done(function(){
                      $('.flashcard').unbind('click swipe');
@@ -37,9 +36,13 @@ function sendResult(isTrue)
      - hide dem buttonz again
      - rinse and repeat.
     */
-    $('.flashcard').toggleClass('flipped').promise().done(function() {
-        $(".navbar-fixed-bottom").hide();
     
+    
+    $('.flashcard').toggleClass('flipped').promise().done(function() {
+        $.post("route, to self, leave blank",{/*keyvals*/},function(msg){
+            console.log(msg);
+        })
+        $(".navbar-fixed-bottom").hide();
     flipLogic();
     });
 }

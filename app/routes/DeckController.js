@@ -58,7 +58,7 @@ DeckController.prototype.addCard = function(req,res){
         
         function(cb){
             // Update user srs queue
-            collection.update( { _id: user._id },StudyQueueAdd(deckID,card._id),
+            collection.update( { _id: user._id },StudyQueueAdd(deckID,srs),
             function(){
                 user.srs[deckID].push(srs);
                 cb()
@@ -111,14 +111,11 @@ DeckController.prototype.newDeck = function(req,res){
 
 
 // Helpers 
-function StudyQueueAdd(deckID,cardID){ 
+function StudyQueueAdd(deckID,srs){ 
     var srsUpdate = {};
     var DeckIDtoSRS = "srs."+deckID;
-    srsUpdate[DeckIDtoSRS] = cardID
-    var params = { 
-        $addToSet:srsUpdate
-    };
-    
+    srsUpdate[DeckIDtoSRS] = srs
+    var params = { $push:srsUpdate };
     return params
 }
 
