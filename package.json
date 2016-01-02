@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/dahnny012/respot/issues"
   },
-  "homepage": "https://github.com/dahnny012/respot#readme"
+  "homepage": "https://github.com/dahnny012/respot#readme",
+  "dependencies": {
+    "async": "^1.5.0"
+  }
 }

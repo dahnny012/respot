@@ -11,9 +11,28 @@ html
             h3 #{error}
         else 
             div.registerForm
-              form(name="register", action="", method="post")
+              form(name="register")
                 p Front of card:
                  textarea(name='front')
                 p Back of card:
                  textarea(name='back')
                 input(type='submit', value="Create")
+                
+                
+script.
+    function formData(){
+        var data = {}
+        $('form').serializeArray().forEach(function(e){
+            data[e.name] = e.value;
+        })
+        
+        return data;
+    }
+    
+    $('form').submit(function (evt) {
+        evt.preventDefault();
+        var data = formData();
+        $.post("",data,function(msg){
+            console.log(msg);
+        });
+    });

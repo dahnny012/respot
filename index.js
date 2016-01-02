@@ -1,7 +1,5 @@
 "use strict";
-var test = require("./test");
-
-
-var a = new test();
-
-a.hello();
+var path = require('path');
+var appDir = path.dirname(require.main.filename);
+var test = require(appDir+"/app/hello");
+console.log(test());

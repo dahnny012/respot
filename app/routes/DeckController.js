@@ -65,7 +65,7 @@ DeckController.prototype.addCard = function(req,res){
             })
         }],
         
-        function(err,data){ res.render({"success":true}); })
+        function(err,data){ res.json({"success":true}); })
     })
 }
 DeckController.prototype.delete = function(){
