@@ -1,23 +1,14 @@
-html
-    head
-        title Login to ReSpot
-        link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", rel="stylesheet", integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==", crossorigin="anonymous")
-        link(href="/stylesheets/form.css" rel="stylesheet")
-        script(src="https://code.jquery.com/jquery-latest.min.js")
-        script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js", integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==", crossorigin="anonymous")
-    body
-        if error 
-            h1 An Error has occured. 
-            h2 #{error}
-
-        else
-            div.modal-dialog
-                div.formmodal-container
-                    h2 ReSpot
-                    h1 Login to Your Account
-                    form(name="login", action="/user/login", method="post")
-                        input(type='text', name='user' placeholder="Username")
-                        input(type='password', name='pass' placeholder="Password")
-                        input(type='submit', value="Login" name="login" class="form formmodal-submit")
-                    div.form-help
-                    a(href="/user/register") Register
+div(class="modal fade", id="login-modal", tabindex="-1", role="dialog", style="display: none;")
+    div.modal-dialog
+        div.formmodal-container
+            h2 ReSpot
+            h1 Login to Your Account
+            form(id="login", action="/user/login", method="post")
+                input(type='text', name='user' placeholder="Username")
+                input(type='password', name='pass' placeholder="Password")
+                input(type='submit', value="Login" name="login" class="form formmodal-submit")
+            div.form-help
+            a(data-toggle="modal", data-target="#register-modal" href="#" onclick="$('#login-modal').modal('hide')") Register for an account
+            if error 
+                p(class="error") An Error has occured. 
+            p(id="login-err-msg", class="error") #{error}

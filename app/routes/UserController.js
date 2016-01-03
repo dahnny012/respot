@@ -6,18 +6,17 @@ var Registration = require("../models/Registration");
 
 
 // Factories
-
 var DeckControllerFactory = require("./DeckController");
 var StudyControllerFactory = require("./StudyController");
 
-// Singletons not really.
+// Make them controllers
 var DeckController = new DeckControllerFactory();
 var StudyController = new StudyControllerFactory();
 var async = require("async");
 
 
-var LOGINERROR = "Wrong Username/Password or it doesn't exist"
-var REGISTERERROR = "Account already exists"
+var LOGINERROR = "Wrong Username/Password. Maybe it doesn't exist?";
+var REGISTERERROR = "Account already exists. Please try another name.";
 
 // The router contains the db connection among other things
 // See Monk.js
@@ -41,14 +40,11 @@ UserController.prototype.index = function(req,res){
         DeckController.retrieve(req,user.decks).then(function(decks){
             user.decks = decks;
             user.decks.forEach(function(e){
-                StudyController.getReviewQueue(user.srs[e._id])
+                user.srs[e._id] = StudyController.getReviewQueue(user.srs[e._id])
             })
             res.render("index",{user:user}); 
         })
     });
-    
-    
-    
 }
 
 UserController.prototype.update = function(req,user){
@@ -74,10 +70,11 @@ UserController.prototype.register = function(req,res,body){
             collection.insert(new User({username:POST.user}))
             .then(function(doc){
                 SESSION.user = doc;
-                res.redirect("/"); 
+                res.json({"success":true}); 
             })
         }else{
-            res.render("user/register",{"error":REGISTERERROR});
+            //Failed to register
+            res.json({"success":false, "error": REGISTERERROR});
         }
     });
 }
@@ -95,11 +92,11 @@ UserController.prototype.login = function(req,res,body){
         if(docs.length == 1){
             collection.find(user,function(e,docs){
                 SESSION.user = docs[0];
-                res.redirect("/");
+                res.json({"success":true});
             })
         }else{
         // Login Unsuccessful
-        res.render("user/login",{"error":LOGINERROR});
+        res.json({success:false,"error":LOGINERROR});
         }
     });
 }

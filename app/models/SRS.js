@@ -1,11 +1,12 @@
-var SECS = 1;
-var MINUTE = 60;
-var HOUR = 3600;
-var DAY = 24*3600;
+var MILISECS = 1
+var SECS = 1000 * MILISECS;
+var MINUTE = 60 * SECS;
+var HOUR = 60 * MINUTE * SECS;
+var DAY = 24 * HOUR;
 
 
 function SRS(obj){
-    this.timer = new Date();
+    this.timer = new Date().valueOf();
     this.flashcardID = "";
     this.type = "srs"
     for (var prop in obj) this[prop] = obj[prop];
@@ -15,10 +16,10 @@ function SRS(obj){
 
 // For now answer is a boolean.
 SRS.prototype.newTimer =function(answer){
-    if(answer) 
-        this.timer = new Date() + 6 * HOUR
+    if(answer == 'true') 
+        this.timer = new Date().valueOf()  + HOUR;
     else 
-        this.time =  new Date() + 5 * MINUTE
+        this.timer =  new Date().valueOf()  + MINUTE;
 }
 
 module.exports = SRS;

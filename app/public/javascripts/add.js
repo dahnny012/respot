@@ -1,7 +1,7 @@
 var currentDeckID;
-function formData(){
+function formData(id){
     var data = {}
-    $('#new-card').serializeArray().forEach(function(e){
+    $(id).serializeArray().forEach(function(e){
         data[e.name] = e.value;
     })
     
@@ -11,9 +11,8 @@ function formData(){
 $(document).ready(function(){
     $('#new-card').submit(function (evt) {
     evt.preventDefault();
-    var data = formData();
+    var data = formData('#new-card');
     $.post("deck/add/"+currentDeckID,data,function(msg){
-        console.log(msg);
         $(".counter-"+currentDeckID).each(function(index, element){
             element.innerText = parseInt(element.innerText) + 1;
         });

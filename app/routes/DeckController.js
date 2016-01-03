@@ -38,7 +38,7 @@ DeckController.prototype.addCard = function(req,res){
     // Put the card into the DB
     collection.insert(card,function(e,card){
         var srs = new SRS({
-            timer:new Date(),
+            timer:new Date().valueOf(),
             flashcardID:card._id
         })
         

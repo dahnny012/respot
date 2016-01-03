@@ -3,6 +3,12 @@
 var Controller = require("./Controller");
 var SRS = require("../models/SRS");
 
+
+
+var ObjectId = require('mongodb').ObjectID;
+var moment = require("moment");
+
+
 function StudyController(){
     
 }
@@ -18,21 +24,24 @@ StudyController.prototype.evaluate = function(req,res){
     var user = req.session.user;
     var deckID = req.params.deckID;
     var POST = req.body
-    var srs = new SRS(POST.srs);
-    var answer = POST.answer;
+    var srs = new SRS(POST);
+    var answer = srs.answer;
     
     srs.newTimer(answer);
     
-    var target = {"_id":user._id};
+    var target = {"_id":ObjectId(user._id)};
+    target["srs."+deckID+".flashcardID"] = ObjectId(srs.flashcardID);
     var query = {};
     query["srs."+deckID+".$.timer"] = srs.timer;
     
     // mongo op courtesy of 
     // http://mongoblog.tumblr.com/post/21792332279/updating-one-element-in-an-array
-    collection.update(target, {"$set" : query},function(e,doc){
-        var status = {"success":e  != true}
+    collection.update(target, {"$set" : query},function(e){
+        var status = {"success":true,"message":e}
         res.json(status);
     });
+    
+    
 }
 
 
@@ -63,15 +72,10 @@ StudyController.prototype.study = function(req,res){
 
 StudyController.prototype.getReviewQueue= function(queue){
     var reviewQueue = []
-    queue.sort(function(a,b){
-        return new Date(a.timer) - new Date(b.timer);
-    });
-    
     // Grab up to when cards are too new.
     for(var i=0; i<queue.length; i++){
-        if(new Date(queue[i].timer) > new Date())
-            break;
-        reviewQueue.push(queue[i])
+        if(queue[i].timer < new Date().valueOf())
+            reviewQueue.push(queue[i])
     }
     return reviewQueue;
 }

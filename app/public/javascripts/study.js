@@ -2,7 +2,7 @@ var curIndex; //holds the current card index
 
 function init()
 {
-    $(".navbar-fixed-bottom").hide(); //hide buttons first
+    $("#evaluate").hide(); //hide buttons first
     
     userActionHandler('.determineFalse', false);
     userActionHandler('.determineTrue', true);
@@ -20,7 +20,7 @@ function flipLogic()
                  $('.flashcard').toggleClass('flipped').promise().done(function(){
                      $('.flashcard').unbind('click');
                  });
-                 $('.navbar-fixed-bottom').fadeIn();
+                 $('#evaluate').fadeIn();
             }
     });
 }
@@ -33,11 +33,12 @@ function sendResult(isTrue)
         console.log("User thinks they are wrong.") //perform call to backend to record false
 
     $('.flashcard').toggleClass('flipped').promise().done(function() {
-        $.post("route, to self, leave blank",{/*keyvals*/},function(msg){
+        var target = srs[curIndex];
+        target.answer = isTrue;
+        $.post("",target,function(msg){
             console.log(msg);
-            loadNextCard();
         })
-        $(".navbar-fixed-bottom").hide();
+        $("#evaluate").hide();
     flipLogic();
     });
 }
