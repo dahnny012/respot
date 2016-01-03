@@ -25,10 +25,6 @@ router.get('/deck/:deckID'+MongoIDRegex, function(req, res, next) {
     else res.redirect("/");
 });
 
-router.get('/deck/new', function(req, res, next) {
-    if(req.session.user) res.render('deck/new');
-    else res.redirect("/");
-});
 
 router.post('/deck/new', function(req, res, next) {
     if(req.session.user) DeckController.newDeck(req,res);

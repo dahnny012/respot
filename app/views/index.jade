@@ -3,8 +3,10 @@ html
         title ReSpot - Home
         link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", rel="stylesheet", integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==", crossorigin="anonymous")
         link(rel='stylesheet', href='/stylesheets/style.css')
+        link(rel='stylesheet', href='/stylesheets/form.css')
         script(src="https://code.jquery.com/jquery-latest.min.js")
         script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js", integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==", crossorigin="anonymous")
+        script(src="javascripts/add.js")
     body
         if error 
             h1 An Error has occured. 
@@ -20,11 +22,8 @@ html
                 p Welcome to ReSpot! We hope you'll love it.
               else
                   p Firstly, please log In so we can send you on your way. 
-                  a(Class="btn btn-primary" href="user/login") Login
-                  //-because I'm a pleb and I don't want to add CSS for this for now.
-                  br
-                  br
-                  a(Class="btn btn-primary" href="user/register") Register
+                  a(Class="btn btn-primary action-buttons" href="user/login") Login
+                  a(Class="btn btn-primary action-buttons" href="user/register") Register
               
             if user
                 each val in user.decks
@@ -35,20 +34,24 @@ html
                           i #{val.description}
                         ul(class="list-group list-group-flush")
                           li(class="list-group-item")
-                            | Cards: #{val.cards.length}
+                            | Cards:
+                            span(class="counter-#{val._id}") #{val.cards.length}
                           li(class="list-group-item")
-                            | Review: #{user.srs[val._id].length}
+                            | Review:
+                            span(class="counter-#{val._id}") #{user.srs[val._id].length}
                           li(class="list-group-item")
-                            a(class="btn btn-primary action-buttons" href="/deck/add/"+val._id) Add Cards
+                            a(data-toggle="modal", data-target='#add-card-modal', class="btn btn-primary action-buttons", href="#", onClick="setValID('#{val._id}')") Add Cards
+                            // a(class="btn btn-primary action-buttons" href="/deck/add/"+val._id) Add Cards
                             a(class="btn btn-primary action-buttons" href="/study/"+val._id) Study
                 
                 div(class="col-md-6")
                   div(class="card card-block")
                     h3(class="card-title")
                       li(class="list-group-item")
-                        a(class="btn btn-primary action-buttons" href="/deck/new") + Create a New Deck
-
-                            
+                        a(data-toggle="modal", data-target='#new-deck-modal' class="btn btn-primary action-buttons" href="#") + Create a New Deck
+            
+    include ./deck/new.jade
+    include ./deck/add.jade
 //- ul dis way to get the card ids....
                       //-  each srs in user.srs[val._id]
                       //-    li= moment(srs.timer).format("DD.MM.YYYY HH:MM:SS")
