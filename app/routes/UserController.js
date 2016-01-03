@@ -31,18 +31,17 @@ UserController.prototype = new Controller();
 
 // At this point they should be logged in.
 UserController.prototype.index = function(req,res){
-    var user = req.session.user;
+    var session = req.session.user;
     var db = req.db;
     var collection = db.get('respot');
 
-    collection.findById(user._id,function(e,user){
+    collection.findById(session._id,function(e,user){
+        session = user
         // Retrieve the deck.
         DeckController.retrieve(req,user.decks).then(function(decks){
             user.decks = decks;
             user.decks.forEach(function(e){
-                user.srs[e._id].sort(function(a,b){
-                    return new Date(a.timer) - new Date(b.timer);
-                });
+                StudyController.getReviewQueue(user.srs[e._id])
             })
             res.render("index",{user:user}); 
         })

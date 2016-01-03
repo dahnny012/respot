@@ -1,4 +1,4 @@
-var userDetermined; //holds the user choice if user thinks is true or false
+var curIndex; //holds the current card index
 
 function init()
 {
@@ -7,6 +7,8 @@ function init()
     userActionHandler('.determineFalse', false);
     userActionHandler('.determineTrue', true);
     
+    curIndex = 0;
+    loadCardData(curIndex);
     flipLogic();
 }
 
@@ -16,7 +18,7 @@ function flipLogic()
         'click' : function()
             {
                  $('.flashcard').toggleClass('flipped').promise().done(function(){
-                     $('.flashcard').unbind('click swipe');
+                     $('.flashcard').unbind('click');
                  });
                  $('.navbar-fixed-bottom').fadeIn();
             }
@@ -29,22 +31,42 @@ function sendResult(isTrue)
         console.log("User thinks they are right.") //perform call to backend to record true 
     else
         console.log("User thinks they are wrong.") //perform call to backend to record false
-    
-    /*update UI and clean up for next card by:
+
+    $('.flashcard').toggleClass('flipped').promise().done(function() {
+        $.post("route, to self, leave blank",{/*keyvals*/},function(msg){
+            console.log(msg);
+            loadNextCard();
+        })
+        $(".navbar-fixed-bottom").hide();
+    flipLogic();
+    });
+}
+
+function loadNextCard()
+{
+ /*update UI and clean up for next card by:
      - update the front of the card, 
      - flip it, then update teh other side of the card
      - hide dem buttonz again
      - rinse and repeat.
     */
+    if(curIndex != flashcards.length - 1)
+        curIndex++;
+    else
+    {
+        window.location = '/'
+    }
+    loadCardData(curIndex);
+    console.log("Next card loaded:" + curIndex);
+}
+
+//update the html for front and back.
+function loadCardData(index)
+{
+    $('.txt-front').text(flashcards[index].front);
     
-    
-    $('.flashcard').toggleClass('flipped').promise().done(function() {
-        $.post("route, to self, leave blank",{/*keyvals*/},function(msg){
-            console.log(msg);
-        })
-        $(".navbar-fixed-bottom").hide();
-    flipLogic();
-    });
+    $('.title').text(flashcards[index].front); //update the title at the back 
+    $('.txt-back').text(flashcards[index].back);
 }
 
 
@@ -55,12 +77,14 @@ function userActionHandler(ele, isTrue)
     {
         $(ele).on('click', function() {
             sendResult(true);
+            loadNextCard();
         });
     }
     else
     {
         $(ele).on('click', function() {
             sendResult(false);
+            loadNextCard();
         });
     }
 }

@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  padding-bottom: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -13,3 +13,11 @@ li.deck-container{
   list-style-type: none; /* Gets rid of the bullet points */
   float: left;
 }
+
+.action-buttons{
+  margin-right:3px;
+}
+
+/*.card {*/
+/*  border: 1px solid #e5e5e5;*/
+/*}*/

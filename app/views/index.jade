@@ -11,13 +11,13 @@ html
             h2 #{error}
             
         else
+        include ./navbar.jade
         div.container
            div.jumbotron
               h1 ReSpot
               if user 
                 h2 Hello, #{user.username}.
                 p Welcome to ReSpot! We hope you'll love it.
-
               else
                   p Firstly, please log In so we can send you on your way. 
                   a(Class="btn btn-primary" href="user/login") Login
@@ -28,20 +28,27 @@ html
               
             if user
                 each val in user.decks
-                  div(class="card")
-                    div(class="card-block")
-                      h4(class="card-title") Deck: (#{val.name})
-                      p(Class="card-text")
-                        Description(#{val.description})
-                      ul(class="list-group list-group-flush")
-                        li(class="list-group-item")
-                          | Number of Cards: #{val.cards.length}
-                        li(class="list-group-item")
-                          | To Review: #{user.srs[val._id].length}
-                        li(class="list-group-item")
-                          a(class="btn btn-primary" href="/deck/add/"+val._id) Add Cards
-                          a(class="btn btn-primary" href="/deck/new") Create a Deck
+                    div(class="col-md-6")
+                      div(class="card card-block")
+                        h3(class="card-title") #{val.name}
+                        p(class="card-text")
+                          i #{val.description}
+                        ul(class="list-group list-group-flush")
+                          li(class="list-group-item")
+                            | Cards: #{val.cards.length}
+                          li(class="list-group-item")
+                            | Review: #{user.srs[val._id].length}
+                          li(class="list-group-item")
+                            a(class="btn btn-primary action-buttons" href="/deck/add/"+val._id) Add Cards
+                            a(class="btn btn-primary action-buttons" href="/study/"+val._id) Study
                 
+                div(class="col-md-6")
+                  div(class="card card-block")
+                    h3(class="card-title")
+                      li(class="list-group-item")
+                        a(class="btn btn-primary action-buttons" href="/deck/new") + Create a New Deck
+
+                            
 //- ul dis way to get the card ids....
                       //-  each srs in user.srs[val._id]
                       //-    li= moment(srs.timer).format("DD.MM.YYYY HH:MM:SS")

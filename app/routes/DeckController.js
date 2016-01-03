@@ -47,24 +47,13 @@ DeckController.prototype.addCard = function(req,res){
             // Put into the deck
             collection.update(
                 { _id: deckID },
-                { $addToSet: {cards: card._id } },function(){
-                    // Do it for the client
-                    user.decks.forEach(function(e){
-                      if(e._id == deckID) e.cards.push(card._id)
-                    })
-                    cb();
-            })
+                { $addToSet: {cards: card._id } },cb)
         },
         
         function(cb){
             // Update user srs queue
-            collection.update( { _id: user._id },StudyQueueAdd(deckID,srs),
-            function(){
-                user.srs[deckID].push(srs);
-                cb()
-            })
+            collection.update( { _id: user._id },StudyQueueAdd(deckID,srs),cb)
         }],
-        
         function(err,data){ res.json({"success":true}); })
     })
 }
@@ -101,9 +90,6 @@ DeckController.prototype.newDeck = function(req,res){
         { _id: user._id },
            params
         ).then(function(){
-            // Apply changes to current user
-            user.srs[deck._id] = [];
-            user.decks.push(deck._id);
             res.redirect("/");
         });
     })

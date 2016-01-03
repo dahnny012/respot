@@ -18,11 +18,21 @@ StudyController.prototype.evaluate = function(req,res){
     var user = req.session.user;
     var deckID = req.params.deckID;
     var POST = req.body
-    var srs = new SRS(req.params.srs);
+    var srs = new SRS(POST.srs);
+    var answer = POST.answer;
     
+    srs.newTimer(answer);
     
+    var target = {"_id":user._id};
+    var query = {};
+    query["srs."+deckID+".$.timer"] = srs.timer;
     
-    res.json({success:"true"})
+    // mongo op courtesy of 
+    // http://mongoblog.tumblr.com/post/21792332279/updating-one-element-in-an-array
+    collection.update(target, {"$set" : query},function(e,doc){
+        var status = {"success":e  != true}
+        res.json(status);
+    });
 }
 
 
@@ -37,28 +47,34 @@ StudyController.prototype.study = function(req,res){
     
     // Make sure its fresh
     collection.findById(user._id,function(e,doc){
-        var reviewQueue = []
         user = doc
         var queue = user.srs[deckID];
-        // Sort it again
-        queue.sort(function(a,b){
-            return new Date(a.timer) - new Date(b.timer);
-        });
-    
-        // Grab up to when cards are too new.
-        for(var i=0; i<queue.length; i++){
-            if(new Date(queue[i].timer) > new Date())
-                break;
-            reviewQueue.push(queue[i])
-        }
+        var reviewQueue = controller.getReviewQueue(queue);
+        
     
         controller.retrieve(req,reviewQueue.map(function(e){return e.flashcardID}))
         .then(function(docs){
-            res.render("study",{flashcards:docs});  
+            res.render("study",{flashcards:JSON.stringify(docs),
+                                srs:JSON.stringify(reviewQueue)});  
         })
     })
 }
 
+
+StudyController.prototype.getReviewQueue= function(queue){
+    var reviewQueue = []
+    queue.sort(function(a,b){
+        return new Date(a.timer) - new Date(b.timer);
+    });
+    
+    // Grab up to when cards are too new.
+    for(var i=0; i<queue.length; i++){
+        if(new Date(queue[i].timer) > new Date())
+            break;
+        reviewQueue.push(queue[i])
+    }
+    return reviewQueue;
+}
 
 
 module.exports = StudyController
