@@ -27,13 +27,16 @@ html
                 p Here's your cards in the #{deck.name} deck.
     
             each card, index in deck.cards 
-                div(class="col-sm-6")
+                div(class="col-sm-6" id="card-#{index}")
                       div(class="card card-block text-center ")
                         ul(class="list-group list-group-flush")
                           li(class="list-group-item")
                             h3(class="card-header") #{card.front}
-                            h4(class="text-left") #{card.back}
-                            a(data-toggle="modal", data-target='#edit-card-modal', class="btn btn-primary", href="#", onClick="editCardData(#{index})") Edit Card
+                            br
+                            h4 #{card.back}
+                          li(class="list-group-item")
+                            a(data-toggle="modal", data-target='#edit-card-modal', class="btn btn-primary action-buttons", href="#", onClick="editCardData(#{index})") Edit Card
+                            a(class="btn btn-danger action-buttons" onClick="deleteCard(#{index})") Delete Card
 
           include ./edit.jade
 script. 

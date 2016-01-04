@@ -8,17 +8,17 @@ function init()
     //serActionHandler('.determineTrue', true);
     
     curIndex = 0;
-    //loadCardData(curIndex);
+    loadCardData(curIndex);
     flipLogic();
 }
 
 function flipLogic()
 {
-    $('.flashcard').on({
+    $('body').on({
         'click' : function()
             {
                  $('.flashcard').toggleClass('flipped').promise().done(function(){
-                     $('.flashcard').unbind('click');
+                    //  $('.flashcard').unbind('click');
                  });
                  $('#evaluate').fadeIn();
             }
@@ -101,4 +101,8 @@ function getNextColor(){
 $(document).ready(function() {
     init();
     $("body").css("background-color",getNextColor());
+    
+    $(document).click(function(e){
+        $("body").css("background-color",getNextColor());
+    })
 });

@@ -20,6 +20,10 @@ li.deck-container{
   margin-right:3px;
 }
 
+.btn-primary {
+  background-color: #3C8DBC;
+}
+
 
 .full {
   background: url("../images/hero_seattle.jpg") no-repeat center center fixed; 

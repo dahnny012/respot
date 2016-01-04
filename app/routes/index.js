@@ -46,9 +46,6 @@ router.post('/deck/add/:deckID'+MongoIDRegex, function(req, res, next) {
 
 
 
-router.get('/study', function(req, res, next) {
-    res.render("newStudy",{});
-});
 
 
 router.post('/study/:deckID'+MongoIDRegex, function(req, res, next) {
@@ -64,6 +61,11 @@ router.get('/study/:deckID'+MongoIDRegex, function(req, res, next) {
     if(req.session.user) StudyController.study(req,res);
     else res.redirect("/");
 });
+
+router.get('/study', function(req, res, next) {
+    res.render("newStudy",{});
+});
+
 
 
 router.get('/user/login', function(req, res, next) {
@@ -83,12 +85,12 @@ router.get('/card/:'+MongoIDRegex, function(req, res, next) {
     else res.redirect("/");
 });
 
-router.post('/card/update/'+MongoIDRegex, function(req, res, next) {
+router.post('/card/update/:cardID'+MongoIDRegex, function(req, res, next) {
     if(req.session.user) CardController.update(req,res);
     else res.redirect("/");
 });
 
-router.post('/card/delete'+MongoIDRegex, function(req, res, next) {
+router.post('/card/delete/:cardID'+MongoIDRegex, function(req, res, next) {
     if(req.session.user) CardController.delete(req,res);
     else res.redirect("/");
 });

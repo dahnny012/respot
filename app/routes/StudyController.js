@@ -67,7 +67,7 @@ StudyController.prototype.study = function(req,res){
     
         controller.retrieve(req,reviewQueue.map(function(e){return e.flashcardID}))
         .then(function(docs){
-            res.render("study",{flashcards:JSON.stringify(docs),
+            res.render("newStudy",{flashcards:JSON.stringify(docs),
                                 srs:JSON.stringify(reviewQueue)});  
         })
     })

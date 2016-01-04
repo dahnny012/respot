@@ -35,7 +35,7 @@ html
                         i #{val.description}
                       li(class="list-group-item")
                         a(href="/deck/"+val._id)
-                          button(class="btn btn-primary" type='submit' style="margin-left:3px") Cards 
+                          button(class="btn btn-primary" type='submit') Cards 
                             span(class="badge counter-#{val._id}") #{val.cards.length}
                         a(href="/study/"+val._id)
                             button(class="btn btn-primary" id="study-#{val._id}" type='submit' style="margin-left:3px;") Study 
@@ -59,7 +59,7 @@ html
           div.container
              div.jumbotron(style="background:rgba(0,0,0,0); color:white;")
                 h1 ReSpot
-                p Firstly, please log In so we can send you on your way. 
+                h3 Go ahead and log in so we can send you on your way. 
                 a(data-toggle="modal", data-target="#login-modal" class="btn btn-primary action-buttons" href="#") Login
                 a(data-toggle="modal", data-target="#register-modal" class="btn btn-primary action-buttons" href="#") Register
             
