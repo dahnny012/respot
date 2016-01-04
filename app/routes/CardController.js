@@ -22,6 +22,7 @@ CardController.prototype.update = function(req,res){
         res.json({success:e == null})
     });
 }
+
 CardController.prototype.delete = function(req,res){
     var POST = req.body;
     var SESSION = req.session;
@@ -33,7 +34,6 @@ CardController.prototype.delete = function(req,res){
     
     collection.remove({"_id":cardID},function(e){
         // Update the srs
-        
         var target = {"_id":ObjectId(user._id)};
         var query = {};
         query["srs."+deckID] = {"flashcardID":ObjectId(cardID)};
@@ -43,8 +43,12 @@ CardController.prototype.delete = function(req,res){
         var target = {"_id":ObjectId(deckID)};
         var query = {};
         query["cards"] = ObjectId(cardID);
-        console.log(target);
-        console.log(query);
+        collection.update(target,{$pull:query});
+        
+        // Update the history.
+        var target = {"_id":ObjectId(user._id)};
+        var query = {};
+        query["history"] = {"flashcardID":cardID};
         collection.update(target,{$pull:query});
     })
 }

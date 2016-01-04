@@ -6,7 +6,7 @@ var moveNext;
 
 function init()
 {
-    $("#evaluate").fadeOut(); //hide buttons first
+    $("#evaluate").hide(); //hide buttons first
     
     userActionHandler('#determineFalse', false);
     userActionHandler('#determineTrue', true);
@@ -33,11 +33,6 @@ function flipLogic()
 
 function sendResult(isTrue)
 {
-    if(isTrue)
-        console.log("User thinks they are right.") //perform call to backend to record true 
-    else
-        console.log("User thinks they are wrong.") //perform call to backend to record false
-
     $('.flashcard').toggleClass('flipped').promise().done(function() {
         var target = srs[curIndex];
         target.answer = isTrue;
@@ -72,7 +67,6 @@ function loadNextData()
         }
     }
     loadCardData(curIndex);
-    console.log("loaded:" + curIndex);
 }
 
 //update the html for front and back.
@@ -111,8 +105,14 @@ function userActionHandler(ele, isTrue)
     }
 }
 
+var RED = "#f44336";
+var BLUE ="#2196f3";
+var YELLOW = "#ff9800";
+var GREEN = "#4caf50";
+var PURPLE = "#9c27b0";
+var ORANGE = "#ff6600";
 
-var colors = ["#f44336","#2196f3","#ff9800","#4caf50","#9c27b0"];
+var colors = [ORANGE,BLUE,YELLOW,GREEN,PURPLE];
 function getNextColor(){
         var next = colors.shift();
         colors.push(next);
