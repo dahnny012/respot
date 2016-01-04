@@ -23,8 +23,12 @@ Controller.prototype.retrieve = function(req,ids){
 Controller.prototype.update = function(){
     
 }
-Controller.prototype.delete = function(){
-    
+Controller.prototype.delete = function(req,ids){
+    var db = req.db;
+    var collection = db.get('respot');
+    return collection.remove({
+        '_id': { $in: ids}
+    })
 }
 
 

@@ -23,14 +23,14 @@ StudyController.prototype.stats = function(req,res){
     var collection = db.get('respot');
     var user = req.session.user;
     
-    var flashcardIDs = user.history.map(function(e){
-        return ObjectId(e.flashcardID);
-    })
+
     var controller = this;
     
     collection.findById(user._id,function(e,user){
+        var flashcardIDs = user.history.map(function(e){
+            return ObjectId(e.flashcardID);
+        })
         controller.retrieve(req,flashcardIDs).then(function(flashcards){
-            
             for (var i = 0; i < user.history.length; i++) {
                 user.history[i].flashcard = flashcards[i];
             }

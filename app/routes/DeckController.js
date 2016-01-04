@@ -25,31 +25,23 @@ DeckController.prototype.index = function(req,res){
     var deckID = req.params.deckID;
     var self = this;
     
-    collection.findById(deckID,function(e,deck){
-        self.retrieve(req,deck.cards).then(function(cards){
-            deck.cards = cards;
-            res.render("deck/index",{'deck':deck});
+    collection.findById(user._id,function(e,user){
+        collection.findById(deckID,function(e,deck){
+            var flashcardIDs = user.srs[deckID].map(function(e){
+                return e.flashcardID;
+            });
+            
+            self.retrieve(req,flashcardIDs).then(function(cards){
+                for (var i = 0; i < cards.length; i++) {
+                    cards[i].srs = user.srs[deckID][i];
+                }
+                deck.cards = cards;
+                res.render("deck/index",{'deck':deck});
+            })
         })
     })
 }
 
-DeckController.prototype.stats = function(req,res){
-    var db = req.db;
-    var collection = db.get('respot');
-    var user = req.session.user;
-    var deckID = req.params.deckID;
-    var POST = req.body
-    
-    var flashcardIDs = user.srs[deckID].map(function(e){
-        return e.flashcardID
-    })
-    
-    this.retrieve(req,flashcardIDs).then(function(docs){
-        res.render("study/stats",{srs:user.srs[deckID],cards:flashcardIDs});
-    });
-    
-    
-}
     
 DeckController.prototype.addCard = function(req,res){
     var POST = req.body
@@ -87,8 +79,31 @@ DeckController.prototype.addCard = function(req,res){
         function(err,data){ res.json({"success":true}); })
     })
 }
-DeckController.prototype.delete = function(){
-    
+DeckController.prototype.deleteDeck = function(req,res){
+    var db = req.db;
+    var collection = db.get('respot');
+    var POST = req.body;
+    var user = req.session.user
+    // Delete a deck...
+
+    var controller = this;
+    collection.find(POST.deckID,function(e,deck){
+        // Delete all the cards
+        // Get all the IDs.
+        var flashcardIDs =deck.cards.map(function(e){
+            return e._id;
+        })
+        controller.delete(req,flashcardIDs);
+        
+        // Delete the deck
+        collection.remove({"_id":ObjectId(POST.deckID)});
+        
+        // Delete the entry for the user
+        var target = {"_id":ObjectId(user._id)};
+        var query = {};
+        query["srs."+POST.deckID] = "";
+        collection.update(target,{$unset:query})
+    })
 }
 DeckController.prototype.newDeck = function(req,res){
     var db = req.db;
