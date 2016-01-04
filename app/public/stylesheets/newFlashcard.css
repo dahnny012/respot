@@ -22,17 +22,19 @@ body{
   color: white;
 }
 
-.front, .back {
-  /*left:0;*/
-  /*right:0;*/
-  /*margin-left:auto;*/
-  /*margin-right:auto;*/
-  /*text-align:center;*/
-}
 
 .theatre-area {
     -webkit-transform-style: preserve-3d;                                 /* Provides 3D perspective. */
     transition: all 0.3s;                                /* Slows down any transitions (e.g. rotation) */
     -webkit-transition: all 0.3s;
-    
+}
+
+.large {
+  transition: none !important;
+  padding: 2em 5rem 2em 5em;
+  font-size: 4em;
+}
+
+.large: hover {
+  color:;
 }

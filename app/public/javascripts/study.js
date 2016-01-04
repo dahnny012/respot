@@ -2,9 +2,11 @@ var curIndex; //holds the current card index
 var displayFront;
 var moveNext;
 
+//gimme a sec ok 
+
 function init()
 {
-    $("#evaluate").hide(); //hide buttons first
+    $("#evaluate").fadeOut(); //hide buttons first
     
     userActionHandler('#determineFalse', false);
     userActionHandler('#determineTrue', true);
@@ -21,10 +23,9 @@ function flipLogic()
     $(document).click(function()
             {
                  $('.flashcard').toggleClass('flipped').promise().done(function(){
-                     $("body").css("background-color",getNextColor());
+                      loadNextData();
                      $(document).unbind('click');
                  });
-                 loadNextData();
                  $('#evaluate').fadeIn();
             });
 
@@ -41,10 +42,15 @@ function sendResult(isTrue)
         var target = srs[curIndex];
         target.answer = isTrue;
         $.post("",target,function(msg){
-            console.log(msg);
+            // console.log(msg);
         })
-        $("#evaluate").hide();
-    flipLogic();
+        $("#evaluate").hide(function(){
+            flipLogic(); //have to put this in a callback else the event bubbling causes both flipLogic and loadNextData to be fired together
+        });
+        if(curIndex == flashcards.length - 1)
+        {
+            window.location = '/study/stats'
+        }
     });
 }
 
@@ -56,17 +62,14 @@ function loadNextData()
      - hide dem buttonz again
      - rinse and repeat.
     */
-    if(curIndex != flashcards.length - 1)
+    if(curIndex != flashcards.length)
     {
         if(moveNext) //move to next card if the back is being displayed
         {
             curIndex++;
             moveNext = false;
+            $("body").css("background-color",getNextColor());
         }
-    }
-    else
-    {
-        window.location = '/'
     }
     loadCardData(curIndex);
     console.log("loaded:" + curIndex);

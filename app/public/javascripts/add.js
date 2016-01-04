@@ -11,7 +11,7 @@ function formData(id){
 $(document).ready(function(){
     
     //turn off study buttons that do not have enough cards in the deck
-    $('.study-counter').each(function(index, counter){
+    $('.study-counter, .card-num-counter').each(function(index, counter){
         if(parseInt(counter.innerText) == 0)
         {
             $(counter).parent().prop('disabled', true);
@@ -28,6 +28,7 @@ $(document).ready(function(){
             element.innerText = parseInt(element.innerText) + 1;
             if(parseInt(element.innerText) >= 1)
                 $('#study-'+currentDeckID).prop('disabled', false);
+                $('#deck-'+currentDeckID).prop('disabled', false);
         });
         // Reflect the change in the UI.
             // Increment the counters in the deck.

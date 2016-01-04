@@ -35,8 +35,8 @@ html
                         i #{val.description}
                       li(class="list-group-item")
                         a(href="/deck/"+val._id)
-                          button(class="btn btn-primary" type='submit') Cards 
-                            span(class="badge counter-#{val._id}") #{val.cards.length}
+                          button(class="btn btn-primary" type='submit' id="deck-#{val._id}") Cards 
+                            span(class="badge counter-#{val._id} card-num-counter") #{val.cards.length}
                         a(href="/study/"+val._id)
                             button(class="btn btn-primary" id="study-#{val._id}" type='submit' style="margin-left:3px;") Study 
                               span(class="badge counter-#{val._id} study-counter") #{user.srs[val._id].length}
@@ -67,7 +67,3 @@ html
     include ./deck/add.jade
     include ./user/login.jade
     include ./user/register.jade
-//- ul dis way to get the card ids....
-                      //-  each srs in user.srs[val._id]
-                      //-    li= moment(srs.timer).format("DD.MM.YYYY HH:MM:SS")
-                      
