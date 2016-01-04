@@ -32,6 +32,24 @@ DeckController.prototype.index = function(req,res){
         })
     })
 }
+
+DeckController.prototype.stats = function(req,res){
+    var db = req.db;
+    var collection = db.get('respot');
+    var user = req.session.user;
+    var deckID = req.params.deckID;
+    var POST = req.body
+    
+    var flashcardIDs = user.srs[deckID].map(function(e){
+        return e.flashcardID
+    })
+    
+    this.retrieve(req,flashcardIDs).then(function(docs){
+        res.render("study/stats",{srs:user.srs[deckID],cards:flashcardIDs});
+    });
+    
+    
+}
     
 DeckController.prototype.addCard = function(req,res){
     var POST = req.body

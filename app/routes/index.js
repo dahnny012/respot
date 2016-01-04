@@ -66,6 +66,20 @@ router.get('/study', function(req, res, next) {
     res.render("newStudy",{});
 });
 
+router.get('/study/stats', function(req,res,next){
+    if(req.session.user){
+        if(req.query.clear){
+            console.log("Clearing Timline");
+            StudyController.clearStats(req,res);
+        }else{
+            StudyController.stats(req,res);
+        }
+    }
+    else 
+        res.redirect("/");
+});
+
+
 
 
 router.get('/user/login', function(req, res, next) {

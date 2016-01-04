@@ -37,30 +37,7 @@ CardController.prototype.delete = function(req,res){
         var target = {"_id":ObjectId(user._id)};
         var query = {};
         query["srs."+deckID] = {"flashcardID":ObjectId(cardID)};
-        console.log(target);
-        console.log(query)
         collection.update(target,{$pull:query});
-        
-        
-        /*
-        collection.findById(user._id,function(e,doc){
-            var srs = doc.srs[deckID];
-            var srsQueue = srs.filter(function(e){
-                return e.flashcardID != cardID;
-            })
-            
-            srsQueue = srs.map(function(e){
-                e.flashcardID = e.flashcardID;
-                return e;
-            })
-            
-            var target = {"_id":ObjectId(user._id)};
-            var params = {};
-            params["srs."+deckID] = srsQueue;
-            console.log(target);
-            console.log(params);
-            collection.update(target,{$set:params});
-        })*/
         
         // Update the deck
         var target = {"_id":ObjectId(deckID)};

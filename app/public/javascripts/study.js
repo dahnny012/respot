@@ -1,28 +1,33 @@
 var curIndex; //holds the current card index
+var displayFront;
+var moveNext;
 
 function init()
 {
     $("#evaluate").hide(); //hide buttons first
     
-    //userActionHandler('.determineFalse', false);
-    //serActionHandler('.determineTrue', true);
+    userActionHandler('#determineFalse', false);
+    userActionHandler('#determineTrue', true);
     
     curIndex = 0;
+    displayFront = true;
+    moveNext = false;
     loadCardData(curIndex);
     flipLogic();
 }
 
 function flipLogic()
 {
-    $('body').on({
-        'click' : function()
+    $(document).click(function()
             {
                  $('.flashcard').toggleClass('flipped').promise().done(function(){
-                    //  $('.flashcard').unbind('click');
+                     $("body").css("background-color",getNextColor());
+                     $(document).unbind('click');
                  });
+                 loadNextData();
                  $('#evaluate').fadeIn();
-            }
-    });
+            });
+
 }
 
 function sendResult(isTrue)
@@ -43,7 +48,7 @@ function sendResult(isTrue)
     });
 }
 
-function loadNextCard()
+function loadNextData()
 {
  /*update UI and clean up for next card by:
      - update the front of the card, 
@@ -52,22 +57,35 @@ function loadNextCard()
      - rinse and repeat.
     */
     if(curIndex != flashcards.length - 1)
-        curIndex++;
+    {
+        if(moveNext) //move to next card if the back is being displayed
+        {
+            curIndex++;
+            moveNext = false;
+        }
+    }
     else
     {
         window.location = '/'
     }
     loadCardData(curIndex);
-    console.log("Next card loaded:" + curIndex);
+    console.log("loaded:" + curIndex);
 }
 
 //update the html for front and back.
 function loadCardData(index)
 {
-    $('.txt-front').text(flashcards[index].front);
-    
-    $('.title').text(flashcards[index].front); //update the title at the back 
-    $('.txt-back').text(flashcards[index].back);
+    if(displayFront)
+    {
+        $('.theatre-area').text(flashcards[index].front);
+        displayFront = false;
+    }
+    else 
+    {
+        $('.theatre-area').text(flashcards[index].back);
+        displayFront = true;
+        moveNext = true;
+    }
 }
 
 
@@ -78,14 +96,14 @@ function userActionHandler(ele, isTrue)
     {
         $(ele).on('click', function() {
             sendResult(true);
-            loadNextCard();
+            loadNextData();
         });
     }
     else
     {
         $(ele).on('click', function() {
             sendResult(false);
-            loadNextCard();
+            loadNextData();
         });
     }
 }
@@ -93,16 +111,13 @@ function userActionHandler(ele, isTrue)
 
 var colors = ["#f44336","#2196f3","#ff9800","#4caf50","#9c27b0"];
 function getNextColor(){
-    var next = colors.shift()
-    colors.push(next);
-    return next;
+        var next = colors.shift();
+        colors.push(next);
+        return next;
 }
 
 $(document).ready(function() {
     init();
     $("body").css("background-color",getNextColor());
-    
-    $(document).click(function(e){
-        $("body").css("background-color",getNextColor());
-    })
+
 });

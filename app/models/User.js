@@ -5,6 +5,7 @@ function User(obj){
     this.score = "";
     this.decks = [];
     this.srs = {};
+    this.history = [];
     this.type = "user";
     for (var prop in obj) this[prop] = obj[prop];
 }
