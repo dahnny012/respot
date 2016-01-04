@@ -3,7 +3,7 @@ div(class="modal fade", id="add-card-modal", tabindex="-1", role="dialog", style
         div.formmodal-container
             h1 Add Card
             form(name="newCard", id="new-card")
-                textarea(name='front', placeholder="Front of Card")
-                textarea(name='back', placeholder="Back of Card")
+                textarea(name='front', placeholder="Front of Card" required)
+                textarea(name='back', placeholder="Back of Card" required)
                 input(type='submit', value="Create", name="create-card", id="create-card-button", class="form formmodal-submit")
                 

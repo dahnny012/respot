@@ -21,10 +21,9 @@ var MongoIDRegex = '([0-9a-f]{24})/';
 
 
 router.get('/deck/:deckID'+MongoIDRegex, function(req, res, next) {
-    if(req.session.user) res.render("index");
+    if(req.session.user) DeckController.index(req,res);
     else res.redirect("/");
 });
-
 
 router.post('/deck/new', function(req, res, next) {
     if(req.session.user) DeckController.newDeck(req,res);
@@ -43,6 +42,12 @@ router.post('/deck/add/:deckID'+MongoIDRegex, function(req, res, next) {
         // Check if current user has the deck in their list of decks
     if(req.session.user) DeckController.addCard(req,res);
     else res.redirect("/");
+});
+
+
+
+router.get('/study', function(req, res, next) {
+    res.render("newStudy",{});
 });
 
 
@@ -75,6 +80,16 @@ router.post('/user/register',UserController.register);
 
 router.get('/card/:'+MongoIDRegex, function(req, res, next) {
     if(req.session.user) res.end("Yah ok.");
+    else res.redirect("/");
+});
+
+router.post('/card/update/'+MongoIDRegex, function(req, res, next) {
+    if(req.session.user) CardController.update(req,res);
+    else res.redirect("/");
+});
+
+router.post('/card/delete'+MongoIDRegex, function(req, res, next) {
+    if(req.session.user) CardController.delete(req,res);
     else res.redirect("/");
 });
 

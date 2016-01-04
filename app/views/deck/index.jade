@@ -1,0 +1,41 @@
+html
+    head
+        title ReSpot - Deck - #{deck.name}
+        link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", rel="stylesheet", integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==", crossorigin="anonymous")
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        link(rel='stylesheet', href='/stylesheets/form.css')
+        script(src="https://code.jquery.com/jquery-latest.min.js")
+        script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js", integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==", crossorigin="anonymous")
+        script(src="../javascripts/add.js")
+        script(src="../javascripts/login.js")
+        script(src="../javascripts/register.js")
+        script(src="../javascripts/editcard.js")
+        link(href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css')
+
+    body
+          if error 
+              h1 An Error has occured. 
+              h2 #{error}
+              
+          else
+          include ./../navbar.jade
+          div.container
+            div.jumbotron
+                h1 #{deck.name}
+                h2
+                   i #{deck.description}
+                p Here's your cards in the #{deck.name} deck.
+    
+            each card, index in deck.cards 
+                div(class="col-sm-6")
+                      div(class="card card-block text-center ")
+                        ul(class="list-group list-group-flush")
+                          li(class="list-group-item")
+                            h3(class="card-header") #{card.front}
+                            h4(class="text-left") #{card.back}
+                            a(data-toggle="modal", data-target='#edit-card-modal', class="btn btn-primary", href="#", onClick="editCardData(#{index})") Edit Card
+
+          include ./edit.jade
+script. 
+    var deck = !{JSON.stringify(deck)};
+    

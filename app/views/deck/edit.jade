@@ -1,0 +1,9 @@
+div(class="modal fade", id="edit-card-modal", tabindex="-1", role="dialog", style="display: none;")
+    div.modal-dialog
+        div.formmodal-container
+            h1 Edit Card
+            form(name="editCard", id="edit-card")
+                textarea(id='edit-card-front', placeholder="Front of Card" required)
+                textarea(id='edit-card-back', placeholder="Back of Card" required)
+                input(type='submit', value="Edit", name="edit-card", id="edit-card-button", class="form formmodal-submit")
+                

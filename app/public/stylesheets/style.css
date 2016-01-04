@@ -1,6 +1,8 @@
 body {
   padding-bottom: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
+  font-family: 'Roboto', sans-serif;
+  background-color:#ecf0f5;
 }
 
 a {
@@ -27,9 +29,16 @@ li.deck-container{
   background-size: cover;
 }
 
-/*.navbar {*/
-/*  background-color: #337ab7;*/
-/*}*/
+.jumbotron{
+  background-color:white;
+}
+
+
+
+#navbar {
+  background:#3c8dbc; 
+  color:white;
+}
 
 /*.card {*/
 /*  border: 1px solid #e5e5e5;*/

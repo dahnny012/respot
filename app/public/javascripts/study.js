@@ -4,11 +4,11 @@ function init()
 {
     $("#evaluate").hide(); //hide buttons first
     
-    userActionHandler('.determineFalse', false);
-    userActionHandler('.determineTrue', true);
+    //userActionHandler('.determineFalse', false);
+    //serActionHandler('.determineTrue', true);
     
     curIndex = 0;
-    loadCardData(curIndex);
+    //loadCardData(curIndex);
     flipLogic();
 }
 
@@ -90,6 +90,15 @@ function userActionHandler(ele, isTrue)
     }
 }
 
+
+var colors = ["#f44336","#2196f3","#ff9800","#4caf50","#9c27b0"];
+function getNextColor(){
+    var next = colors.shift()
+    colors.push(next);
+    return next;
+}
+
 $(document).ready(function() {
     init();
+    $("body").css("background-color",getNextColor());
 });

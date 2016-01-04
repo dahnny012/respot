@@ -9,6 +9,7 @@ html
         script(src="javascripts/add.js")
         script(src="javascripts/login.js")
         script(src="javascripts/register.js")
+        link(href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css')
 
     if user 
       body
@@ -27,20 +28,20 @@ html
             each val in user.decks
                 div(class="col-md-6")
                   div(class="card card-block")
-                    h3(class="card-title") #{val.name}
-                    p(class="card-text")
-                      i #{val.description}
                     ul(class="list-group list-group-flush")
                       li(class="list-group-item")
-                        | Cards: 
-                        span(class="counter-#{val._id}") #{val.cards.length}
+                        h3(class="card-title") #{val.name}
                       li(class="list-group-item")
-                        | Review: 
-                        span(class="counter-#{val._id}") #{user.srs[val._id].length}
+                        i #{val.description}
                       li(class="list-group-item")
-                        a(data-toggle="modal", data-target='#add-card-modal', class="btn btn-primary action-buttons", href="#", onClick="setValID('#{val._id}')") Add Cards
-                        unless val.cards.length == 0
-                          a(class="btn btn-primary action-buttons" href="/study/"+val._id) Study
+                        a(href="/deck/"+val._id)
+                          button(class="btn btn-primary" type='submit' style="margin-left:3px") Cards 
+                            span(class="badge counter-#{val._id}") #{val.cards.length}
+                        a(href="/study/"+val._id)
+                            button(class="btn btn-primary" id="study-#{val._id}" type='submit' style="margin-left:3px;") Study 
+                              span(class="badge counter-#{val._id} study-counter") #{user.srs[val._id].length}
+                      li(class="list-group-item")
+                        a(data-toggle="modal", data-target='#add-card-modal', class="btn btn-primary", href="#", onClick="setValID('#{val._id}')") Add Cards
               
               div(class="col-md-6")
                 div(class="card card-block")
@@ -48,7 +49,7 @@ html
                     li(class="list-group-item")
                       a(data-toggle="modal", data-target='#new-deck-modal' class="btn btn-primary action-buttons" href="#") + Create a New Deck
     else 
-      body(class="full")
+      body(class="full" style="display:flex; justify-content:center; align-items:center;")
           if error 
               h1 An Error has occured. 
               h2 #{error}
@@ -56,7 +57,7 @@ html
           else
           br
           div.container
-             div.jumbotron
+             div.jumbotron(style="background:rgba(0,0,0,0); color:white;")
                 h1 ReSpot
                 p Firstly, please log In so we can send you on your way. 
                 a(data-toggle="modal", data-target="#login-modal" class="btn btn-primary action-buttons" href="#") Login

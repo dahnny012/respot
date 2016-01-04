@@ -1,14 +1,11 @@
 div(class="modal fade", id="register-modal", tabindex="-1", role="dialog", style="display: none;")
     div.modal-dialog
         div.formmodal-container
-            h2 ReSpot
             h1 Create your new account
             form(id="register", action="/user/register", method="post")
-                input(type='text', name='user' placeholder="New Username")
-                input(type='password', name='pass' placeholder="New Password")
+                input(type='text', name='user' placeholder="New Username" required)
+                input(type='password', name='pass' placeholder="New Password" required)
                 input(type='submit', value="Register" name="login" class="form formmodal-submit")
             div.form-help
             a(data-toggle="modal", data-target="#login-modal" href="#" onclick="$('#register-modal').modal('hide')") Already have an account?
-            if error 
-                p(class="error") An Error has occured. 
-            p(id="register-err-msg", class="error") #{error}
+            .alert.alert-danger(id="register-err-msg" role='alert') #{error}

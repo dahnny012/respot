@@ -4,11 +4,9 @@ div(class="modal fade", id="login-modal", tabindex="-1", role="dialog", style="d
             h2 ReSpot
             h1 Login to Your Account
             form(id="login", action="/user/login", method="post")
-                input(type='text', name='user' placeholder="Username")
-                input(type='password', name='pass' placeholder="Password")
+                input(type='text', name='user' placeholder="Username" required)
+                input(type='password', name='pass' placeholder="Password" required)
                 input(type='submit', value="Login" name="login" class="form formmodal-submit")
             div.form-help
             a(data-toggle="modal", data-target="#register-modal" href="#" onclick="$('#login-modal').modal('hide')") Register for an account
-            if error 
-                p(class="error") An Error has occured. 
-            p(id="login-err-msg", class="error") #{error}
+            .alert.alert-danger(id="login-err-msg" role='alert') #{error}

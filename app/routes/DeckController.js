@@ -10,15 +10,27 @@ var ObjectId = require('mongodb').ObjectID;
 var async = require("async");
 
 function DeckController(){
-    
+        
 }
 
 
 
 DeckController.prototype = new Controller();
 
-DeckController.prototype.index = function(){
+DeckController.prototype.index = function(req,res){
+    var POST = req.body
+    var db = req.db;
+    var collection = db.get('respot');
+    var user = req.session.user;
+    var deckID = req.params.deckID;
+    var self = this;
     
+    collection.findById(deckID,function(e,deck){
+        self.retrieve(req,deck.cards).then(function(cards){
+            deck.cards = cards;
+            res.render("deck/index",{'deck':deck});
+        })
+    })
 }
     
 DeckController.prototype.addCard = function(req,res){

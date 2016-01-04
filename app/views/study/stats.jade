@@ -1,0 +1,171 @@
+html
+    head
+        link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", rel="stylesheet", integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==", crossorigin="anonymous")
+    body.container
+      ul.timeline
+        li
+          // -Time Line Element-
+          .timeline-badge.up
+            i.fa.fa-thumbs-up
+          .timeline-panel
+            .timeline-heading
+              h4.timeline-title Time Line Entry #1
+            .timeline-body
+              // -Time Line Body&Content-
+              p Time line content is placed here...
+        li
+          // -Time Line Element-
+          .timeline-badge.down
+            i.fa.fa-thumbs-down
+          .timeline-panel
+            .timeline-heading
+              h4.timeline-title Time Line Entry #2
+            .timeline-body
+              // -Time Line Body&Content-
+              p Time line content is placed here...
+              p And some more Time line content 
+        li
+          // -Time Line Element-
+          .timeline-badge.neutral
+            i.fa.fa-navicon
+          .timeline-panel
+            .timeline-heading
+              h4.timeline-title Time Line Entry #3
+            .timeline-body
+              // -Time Line Body&Content-
+              p Time line content is placed here...
+              p This appears to be a neutral time line enty...
+        li
+          // -Time Line Element-
+          .timeline-badge.down
+            i.fa.fa-thumbs-down
+          .timeline-panel
+            .timeline-heading
+              h4.timeline-title Time Line Entry #4
+            .timeline-body
+              // -Time Line Body&Content-
+              p Time line content is placed here...
+              p And some more Time line content 
+        li
+          // -Time Line Element-
+          .timeline-badge.up
+            i.fa.fa-thumbs-up
+          .timeline-panel
+            .timeline-heading
+              h4.timeline-title Time Line Entry #5
+            .timeline-body
+              // -Time Line Body&Content-
+              p Time line content is placed here...
+    style.
+      .timeline {
+      list-style: none;
+      padding: 20px 0 20px;
+      position: relative;
+      }
+      .timeline:before {
+      top: 0;
+      bottom: 0;
+      position: absolute;
+      content: " ";
+      width: 3px;
+      background-color: #CCCCCC;
+      left: 25px;
+      margin-left: -1.5px;
+      }
+      .timeline > li {
+      margin-bottom: 20px;
+      position: relative;
+      }
+      .timeline > li:before,
+      .timeline > li:after {
+      content: " ";
+      display: table;
+      }
+      .timeline > li:after {
+      clear: both;
+      }
+      .timeline > li:before,
+      .timeline > li:after {
+      content: " ";
+      display: table;
+      }
+      .timeline > li:after {
+      clear: both;
+      }
+      .timeline > li > .timeline-panel {
+      width: calc( 100% - 55px );
+      float: right;
+      border: 1px solid #d4d4d4;
+      border-radius: 22px;
+      padding: 10px;
+      position: relative;
+      -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+      }
+      .timeline > li > .timeline-panel:before {
+      position: absolute;
+      top: 26px;
+      left: -15px;
+      display: inline-block;
+      }
+      .timeline > li > .timeline-panel:after {
+      position: absolute;
+      top: 27px;
+      left: -14px;
+      display: inline-block;
+      }
+      .timeline > li > .timeline-badge {
+      color: #FFFF99;
+      width: 25px;
+      height: 25px;
+      line-height: 25px;
+      font-size: 1.4em;
+      text-align: center;
+      position: absolute;
+      top: 16px;
+      left: 13px;
+      background-color: #666666;
+      z-index: 100;
+      border-top-right-radius: 50%;
+      border-top-left-radius: 50%;
+      border-bottom-right-radius: 50%;
+      border-bottom-left-radius: 50%;
+      }
+      .timeline > li.timeline-inverted > .timeline-panel {
+      float: left;
+      }
+      .timeline > li.timeline-inverted > .timeline-panel:before {
+      border-left-width: 0;
+      border-right-width: 15px;
+      right: -15px;
+      right: auto;
+      }
+      .timeline > li.timeline-inverted > .timeline-panel:after {
+      border-left-width: 0;
+      border-right-width: 14px;
+      left: -14px;
+      right: auto;
+      }
+      .timeline-badge.primary {
+      background-color: #006699  !important;
+      }
+      .timeline-badge.up {
+      background-color: #339933 !important;
+      }
+      .timeline-badge.down {
+      background-color: #CC3333 !important;
+      }
+      .timeline-badge.neutral {
+      background-color: #999999 !important;
+      }
+      .timeline-title {
+      margin-top: 0;
+      color: inherit;
+      }
+      .timeline-body > p,
+      .timeline-body > ul {
+      margin-bottom: 0;
+      }
+      .timeline-body > p + p {
+      margin-top: 5px;
+      }

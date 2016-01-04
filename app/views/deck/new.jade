@@ -3,6 +3,6 @@ div(class="modal fade", id="new-deck-modal", tabindex="-1", role="dialog", style
         div.formmodal-container
             h1 Create a new Deck.
             form(name="newDeck", action="/deck/new", method="post")
-                input(type='text', name='name', placeholder="Name of Deck")
-                textarea(name='description', placeholder="Description")
+                input(type='text', name='name', placeholder="Name of Deck" required)
+                textarea(name='description', placeholder="Description" required)
                 input(type='submit', value="Create", name="createDeck" class="form formmodal-submit")

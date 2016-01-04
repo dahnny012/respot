@@ -60,6 +60,10 @@ StudyController.prototype.study = function(req,res){
         var queue = user.srs[deckID];
         var reviewQueue = controller.getReviewQueue(queue);
         
+        if(reviewQueue.length == 0){
+            res.redirect('/');
+            return;
+        }
     
         controller.retrieve(req,reviewQueue.map(function(e){return e.flashcardID}))
         .then(function(docs){
