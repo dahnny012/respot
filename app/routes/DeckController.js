@@ -9,14 +9,21 @@ var ObjectId = require('mongodb').ObjectID;
 var async = require("async");
 
 var gre = require("../models/GRE");
-var dict = require("../services/dictionaryAPI")
+var DictionaryFactory = require("../services/dictionaryAPI");
+
+var dict = new DictionaryFactory();
+var cindict = new DictionaryFactory("ldec");
 
 var MAXSIZE = 4102;
 
 function DeckController(){
-        
+    
 }
 
+
+function randomNumber(){
+    return Math.floor(Math.random() * MAXSIZE);
+}
 
 
 DeckController.prototype = new Controller();
@@ -46,7 +53,7 @@ DeckController.prototype.index = function(req,res){
     })
 }
 
-    
+
 DeckController.prototype.addCard = function(req,res){
     var POST = req.body
     var db = req.db;
@@ -55,34 +62,72 @@ DeckController.prototype.addCard = function(req,res){
     var deckID = req.params.deckID;
     
     // Create a card
-    var card = new Card({
-        front:POST.front,
-        back:POST.back,
-        owner:user.username
-    });
+    var card; 
     
-    // Put the card into the DB
-    collection.insert(card,function(e,card){
-        var srs = new SRS({
-            timer:new Date().valueOf(),
-            flashcardID:card._id
+    
+    function dontQuit(cb){
+        var word = gre[randomNumber()];
+        dict.search([word],function(results){
+            if(results.length >= 1){
+                console.log(results);
+                cb(results[0]);
+            }
+            else{
+                dontQuit(cb);
+            }
         })
+    }
+    // Lol who needs a builder a pattern.
+    if(POST.subtype == "gre" || POST.subtype == "eng"){
+        dontQuit(function(pearson){
+            card = new Card({
+                front:pearson.word,
+                back:pearson.def,
+                owner:user.username
+            })
+            toDB(card);
+        })
+    }
+    else if(POST.subtype == "cn"){
         
-        async.parallel([
-        function(cb){
-            // Put into the deck
-            collection.update(
-                { _id: deckID },
-                { $addToSet: {cards: card._id } },cb)
-        },
+    }
+    else{
+        card = new Card({
+            front:POST.front,
+            back:POST.back,
+            owner:user.username
+        });
+        toDB(card)
+    }
+    
+    
         
-        function(cb){
-            // Update user srs queue
-            collection.update( { _id: user._id },StudyQueueAdd(deckID,srs),cb)
-        }],
-        function(err,data){ res.json({"success":true}); })
-    })
+    function toDB(card){
+        // Put the card into the DB
+        collection.insert(card,function(e,card){
+            var srs = new SRS({
+                timer:new Date().valueOf(),
+                flashcardID:card._id
+            })
+            
+            async.parallel([
+            function(cb){
+                // Put into the deck
+                collection.update(
+                    { _id: deckID },
+                    { $addToSet: {cards: card._id } },cb)
+            },
+            
+            function(cb){
+                // Update user srs queue
+                collection.update( { _id: user._id },StudyQueueAdd(deckID,srs),cb)
+            }],
+            function(err,data){ res.json({"success":true}); })
+        })
+    }
 }
+
+
 DeckController.prototype.deleteDeck = function(req,res){
     var db = req.db;
     var collection = db.get('respot');
@@ -144,6 +189,7 @@ DeckController.prototype.newDeck = function(req,res){
     })
 }
 
+// Here be Dragons. Stay safe. GOGO mongo.
 DeckController.prototype.newPearsonDeck=function(req,res){
     var db = req.db;
     var collection = db.get('respot');
@@ -159,7 +205,7 @@ DeckController.prototype.newPearsonDeck=function(req,res){
     })
 
     var map = [];
-    function randomWords(amount){
+    function randomGREWords(amount){
         var words =[];
         while(words.length < amount){
             var rando = gre[Math.floor(Math.random() * MAXSIZE)];
@@ -170,12 +216,21 @@ DeckController.prototype.newPearsonDeck=function(req,res){
         }
         return words;
     } 
+    
+    function randomEngWords(amount){
+        
+    }
+    
+    function randomChineseWords(){
+        
+    }
 
     
     var buffer = []
     POST.number = POST.number || 20;
     function searchDictionary(){
-        var cardsToGenerate = randomWords(POST.number);
+        // TODO change what type of cards that can be generated.
+        var cardsToGenerate = randomGREWords(POST.number);
         dict.search(cardsToGenerate,function(words){
             buffer = buffer.concat(words);
             if(buffer.length < POST.number)

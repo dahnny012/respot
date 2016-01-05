@@ -1,25 +1,36 @@
 # "ReSpot"
 
+*Remember Everything, Never Forget.*
+
 ## App Overview
 
-"My Contest App" enables students to control notifications related to their classes from their cell phone. This improves their awareness of assignments and due dates through customizable alerts. It is proven that today's students are more tech savvy than ever. They expect to interact with classes in the same way as their social networks. "My Contest App" makes courses more mobile and social by doing something remarkable...
+All flashcard systems (such as Anki, Quizlet) today all work, but each of them have major flaws such as lacking the ability to edit a card, a beautiful UI, and some lack a SRS (spaced repetition system).
+
+ReSpot is the result of us taking everything good from these systems and implementing all the features that they lack, leaving only what's necessary and great.
+
+
+### ReSpot has:
+- Beautiful, minimal UI
+- Accessible from everywhere
+- Centralized progress and data stores (as ReSpot is one web app). 
+- No need for a custom app.
+- Uses an SRS algorithm. 
+- Has a unique timeline for each user. 
+- Ability to add and delete cards, as well as decks in a centralized manner.
+- **Ability to generate cards using PEARSON dictionaries for vocabulary, tailored for English, GRE English and Chinese-English words.*
+
 
 ### Planning
 
 [See this project's devPost entry page!](http://devpost.com/software/respot-nwi1s5)
 
-
-
 ### API Usage
 
- * [3rd Party Messaging API](#) - provides communication services
- * [LearningStudio API](http://developer.pearson.com/learningstudio/course-apis/course-info/enrollment/reference) - provides class schedules and rosters
- * [LearningStudio Eventing](http://developer.pearson.com/learningstudio/receive-events) - provides realtime notifications of class happenings
+ * [Pearson Content API](http://developer.pearson.com/apis/dictionaries) - Provides Dictionaries for users to generate GRE study cards, English and other languages.
 
 ### Scope of Functionality 
 
-This application is mostly functional. The number of users able to use this application is limited by shortcuts taken for data storage. These were necessary to finish by the deadline, but replacing the temporary data store with a more scaleble solution would make this application ready for prime time!
-
+This application is fully functional. The number of users able to use the current application instance on our C9 instance is limited by the CPU and Memory limits of the instance. 
 
 ## Prerequisites
 
@@ -40,16 +51,12 @@ The "Installation" section intends to assist someone deploy your project themsel
 
 ## Installation
 
-### Application Configuration
-
-
-~~~~~~~~~~~~~~
-PORT={Port of your choosing}
-~~~~~~~~~~~~~~
-
 ### Application Deployment
 
-#### Build
+Deploy easily by cloning the repo into a C9 (Cloud9 IDE) instance! Alternatively, clone the repository and build in an environment with Node, NPM and Mongo.
+
+
+### Build
 
 Node Server
 
@@ -60,7 +67,7 @@ Node Server
 ~~~~~~~~~~~~~~
 
 
-#### Deploy 
+### Deploy 
 
 ~~~~~~~~~~~~~
 
@@ -77,16 +84,16 @@ The "Credit" section intends to highlight your team. Tell who contributed to wha
 
 ## Credit
 
+This project would have not been possible without [C9.io](https://c9.io).
+This project is a result of multiple open source projects, frameworks, and technologies. (e.g. Bootstrap, Node, NPM, MaterializeCSS, Mongo, Express)
+Special thanks to the online developer community on StackOverflow.
+
 ### Team
 
-This project was a collaborative effort. We are all friends at the University of Minnesota Twin Cities.
+This project was a collaborative effort. We are all friends at the University of Minnesota -Twin Cities.
 
  * [Danh Nguyen](https://github.com/dahnny012) - Lead Full-Stack Developer
  * [Wen Chuan Lee](https://github.com/leewc) - Full-Stack Developer
-
-### Other
-
-This project would have not been possible without [C9.io](https://c9.io).
 
 <!--
 The "License" section intends to be a license declaration. Checkout choosealicence.com to become familar with different licences. The full license should be included in the LICENSE file, but you can also declare and link to it here.

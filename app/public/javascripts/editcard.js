@@ -5,18 +5,19 @@ function editCardData(index)
     var card = deck.cards[index];
     currentFlashCard = card._id;
     
-    $('#edit-card-front').text(card.front);
-    $('#edit-card-back').text(card.back);
+    if(card.front != null && card.front != undefined)
+        $('#edit-card-front').text(card.front);
+    if(card.back != null && card.front != undefined)
+        $('#edit-card-back').text(card.back);
 }
 
 function deleteCard(index)
 {
     $('#card-'+index).remove();
     var card = deck.cards[index];
-    $.post("/card/delete/"+card._id,{deckID:deck._id},function(msg) //TODO: perform card deletion here.
+    $.post("/card/delete/"+card._id,{deckID:deck._id},function(msg)
     {
-        console.log(msg);   
-        //callback function for deleting the card.
+        // console.log(msg);   
         
     });
 }

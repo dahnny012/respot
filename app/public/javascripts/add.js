@@ -48,5 +48,21 @@ function setValID(id){
 
 $(document).ready(function()
 {
-   loadData('#subtype-choice');
+   loadData('#card-subtype-choice');
+   
+   //bind event to the form modal
+    $('#new-pearson-card').submit(function (evt) {
+    evt.preventDefault();
+    var data = formData('#new-pearson-card');
+    
+    $.post("deck/add/"+currentDeckID,data,function(msg){
+        $(".counter-"+currentDeckID).each(function(index, element){
+            element.innerText = parseInt(element.innerText) + 1;
+            if(parseInt(element.innerText) >= 1)
+                $('#study-'+currentDeckID).prop('disabled', false);
+                $('#deck-'+currentDeckID).prop('disabled', false);
+        });
+    });
+        document.getElementById("create-pearson-card-button").value = "Add Another Card";
+    });
 });

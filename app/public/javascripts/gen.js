@@ -7,7 +7,7 @@ var data = [{
                }, 
                {  
                  'displayName' : 'English Words',
-                 'val' : 'english-words',
+                 'val' : 'eng',
                  'desc' : 'A PEARSON Deck of English Words.'
            }];
 

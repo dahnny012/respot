@@ -2,5 +2,8 @@ div(class="modal fade", id="add-pearson-card-modal", tabindex="-1", role="dialog
     div.modal-dialog
         div.formmodal-container
             h1 Add PEARSON Card
-            form(name="newCard", id="new-card")
-                input(type='submit', value="Create", name="create-card", id="create-card-button", class="form formmodal-submit")
+            p.text-center Create a random PEARSON card in one-click.
+            form(name="newCard", id="new-pearson-card")
+                p Card Type: 
+                    select(name='subtype' id='card-subtype-choice')                
+                input(type='submit', value="Create", name="create-card", id="create-pearson-card-button", class="form formmodal-submit")
