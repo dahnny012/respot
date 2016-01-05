@@ -311,18 +311,19 @@ DeckController.prototype.newPearsonDeck=function(req,res){
                                 { _id: deck._id },{ $set: {cards: cardIDs } },cb)
                             }],
                         function(err,data){
-                            res.json({"success":err == null})
+                            res.json({"success": e})
                         }
                     );
                 })
             });
         })
     }
-    if(POST.subtype == "gre" && POST.subtype == "eng"){
+    if(POST.subtype == "gre" || POST.subtype == "eng"){
         searchDictionary();
     }else if(POST.subtype == "cn"){
         searchChineseDictionary();
     }else{
+        console.log("wtf");
         res.json({"success":false});
 ;    }
 }
