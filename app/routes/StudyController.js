@@ -36,7 +36,10 @@ StudyController.prototype.stats = function(req,res){
             }
             
             res.render("study/stats",{srs:user.history.reverse()});
-            //collection.update(target,query);
+                //var target = {"_id":user._id};
+                //var query = {"$set":{"history":[]}};
+                //collection.update(target,query);
+                //res.render("study/stats",{srs:false});
         });
     });
 }
@@ -63,8 +66,6 @@ StudyController.prototype.evaluate = function(req,res){
     var target;
     var query;
     srs.newTimer(answer);
-    
-    console.log(srs);
     
     
     // Adding to history.

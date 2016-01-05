@@ -2,7 +2,7 @@ var needle = require("needle");
 
 function Dictionary(type)
 {
-	this.apiKey = "&apikey=LwBMdDWB71X5Ulumr58CVdA2WR8W2EWc";
+	this.apiKey = "&apikey=7Pe0dg9bcfE7gGzRxqmnK7zpv7I7UnuC";
 	this.limit = 30;
 	this.type = type || "ldoce5";
 	return this;
@@ -12,7 +12,7 @@ Dictionary.prototype.buildQuery = function(spell){
 	//all = true;
 	var request = [];
 	request.push("https://api.pearson.com:443/v2/dictionaries/"+this.type+"/entries?headword=");
-	var request2= "&limit="+this.limit+"&apikey=QeCNmBeHtSGbfr1KfK8OCWC85w8scfsy";
+	var request2= "&limit="+this.limit+"&apikey=7Pe0dg9bcfE7gGzRxqmnK7zpv7I7UnuC";
 	var i=0;
 	while(spell[i] != null)
 	{
@@ -31,7 +31,7 @@ Dictionary.prototype.randomQuery = function(){
 	var MAXSIZE = 50000;
 	var randomOffset = Math.floor(Math.random() * MAXSIZE);
 	request.push("https://api.pearson.com:443/v2/dictionaries/"+this.type+"/entries?offset="+randomOffset);
-	var request2= "&limit="+this.limit+"&apikey=QeCNmBeHtSGbfr1KfK8OCWC85w8scfsy";
+	var request2= "&limit="+this.limit+"&apikey=7Pe0dg9bcfE7gGzRxqmnK7zpv7I7UnuC";
     return request.join()+request2;
 };
 
@@ -88,8 +88,6 @@ Dictionary.prototype.randomCards = function (amount,cb) {
 	needle.get(request ,function(error, response) {
 	    var data = response.body.results;
 	    if(data){
-	    	console.log(request);
-	    	console.log(data.length);
             data.forEach(function(e){
                 if(e.headword &&
                 e.senses &&
