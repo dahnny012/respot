@@ -77,6 +77,18 @@ DeckController.prototype.addCard = function(req,res){
             }
         })
     }
+    
+    function dontQuitChina(cb){
+        cindict.randomCard(function(result){
+            console.log(result);
+            if(result.word != ""){
+                cb(result);
+            }
+            else{
+                dontQuitChina(cb);
+            }
+        })
+    }
     // Lol who needs a builder a pattern.
     if(POST.subtype == "gre" || POST.subtype == "eng"){
         dontQuit(function(pearson){
@@ -89,7 +101,14 @@ DeckController.prototype.addCard = function(req,res){
         })
     }
     else if(POST.subtype == "cn"){
-        
+        dontQuitChina(function(pearson){
+            card = new Card({
+                front:pearson.word,
+                back:pearson.def,
+                owner:user.username
+            })
+            toDB(card);
+        })
     }
     else{
         card = new Card({

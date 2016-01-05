@@ -58,25 +58,26 @@ Dictionary.prototype.search = function (wordsArray,cb) {
 };
 
 
-Dictionary.prototype.randomCard = function (wordsArray,cb) {
+Dictionary.prototype.randomCard = function (cb) {
 	var request = this.randomQuery();
 	var buffer = [];
 	needle.get(request ,function(error, response) {
 	    var data = response.body.results;
 	    if(data){
-            data.forEach(function(e){
+	        for (var i = 0; i < data.length; i++) {
+	            var e = data[i];
                 if(e.headword &&
                 e.senses &&
                 e.senses.length > 0 && 
-                e.senses[0].definition &&
-                e.senses[0].definition.length > 0){
-                    var word =  new Word(e.headword,e.senses[0].definition[0]);
-                    buffer.push(word);
+                e.senses[0].translation){
+                    var word =  new Word(e.headword,e.senses[0].translation);
+                    cb(word);
+                    return;
                 }
-                
-            })
+	        }
+	    }else{
+	        cb(new Word("",""));
 	    }
-	    cb(buffer);
     });
 };
 
