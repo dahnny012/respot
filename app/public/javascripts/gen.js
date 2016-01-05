@@ -52,7 +52,7 @@ $(document).ready(function(){
     $("#gen-deck-button").attr('disabled','disabled');
     
     $.post("deck/pearson/",data, function(msg) {
-            // window.location('/');
+            window.location = '/';
     });
 
     });

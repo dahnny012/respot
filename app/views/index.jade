@@ -42,8 +42,8 @@ html
                             button(class="btn btn-primary" id="study-#{val._id}" type='submit' style="margin-left:3px;") Study 
                               span(class="badge counter-#{val._id} study-counter") #{user.srs[val._id].length}
                       li(class="list-group-item")
-                        a(data-toggle="modal", data-target='#add-card-modal', class="btn btn-primary", href="#", onClick="setValID('#{val._id}')") Add Cards
-                        a(data-toggle="modal", data-target='#add-pearson-card-modal', class="btn btn-primary", href="#", onClick="setValID('#{val._id}')") Add PEARSON Card
+                        a(data-toggle="modal", data-target='#add-card-modal', class="btn btn-primary action-buttons", href="#", onClick="setValID('#{val._id}')") Add Cards
+                        a(data-toggle="modal", data-target='#add-pearson-card-modal', class="btn btn-primary action-buttons", href="#", onClick="setValID('#{val._id}')") Add PEARSON Card
               
               div(class="col-md-6")
                 div(class="card card-block")

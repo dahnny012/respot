@@ -49,5 +49,4 @@ function setValID(id){
 $(document).ready(function()
 {
    loadData('#subtype-choice');
-   console.log("PEARSON ADD FUNCTION LOADED.");
 });

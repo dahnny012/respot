@@ -178,17 +178,14 @@ DeckController.prototype.newPearsonDeck=function(req,res){
         var cardsToGenerate = randomWords(POST.number);
         dict.search(cardsToGenerate,function(words){
             buffer = buffer.concat(words);
-            if(buffer.length < POST.number){
+            if(buffer.length < POST.number)
                 searchDictionary();
-            }
-            else{
-                res.json(buffer);
-                addToDB(words)
-            }
+            else
+                addToDB(buffer.slice(0,20));
         })
     }
     
-    function addToDB(){
+    function addToDB(words){
         var cards = words.map(function(e){
             return new Card({
                 front:e.word,
@@ -196,7 +193,7 @@ DeckController.prototype.newPearsonDeck=function(req,res){
                 owner:user.username
             });
         })
-            
+        
         collection.insert(deck).then(function(deck){
             // Create a map entry
             var srsUpdate = {};
@@ -214,7 +211,7 @@ DeckController.prototype.newPearsonDeck=function(req,res){
             { _id: user._id },
                params
             ).then(function(){
-                collection.insert([cards],function(e,docs){
+                collection.insert(cards,function(e,docs){
                     var srsArr = docs.map(function(e){
                         return new SRS({
                             timer:new Date().valueOf(),
@@ -225,24 +222,24 @@ DeckController.prototype.newPearsonDeck=function(req,res){
                     var cardIDs = docs.map(function(e){
                         return e._id;
                     })
-                
-                
+
                     async.parallel([
-                    // Set SRS queue;
-                    function(cb){
-                        var query = {};
-                        query["srs."+deck._id] = srsArr;
-                        collection.update( { _id: user._id },{$set:query},cb)
-                    },
-                    
-                    function(cb){
-                    // Update Deck Cards;
-                        collection.update(
-                            { _id: deck._id },{ $set: {cards: cardIDs } },cb)
-                        }],
-                    function(err,data){
-                        res.json({"success":err == null})
-                    });
+                        // Set SRS queue;
+                        function(cb){
+                            var query = {};
+                            query["srs."+deck._id] = srsArr;
+                            collection.update( { _id: user._id },{$set:query},cb)
+                        },
+                        
+                        function(cb){
+                        // Update Deck Cards;
+                            collection.update(
+                                { _id: deck._id },{ $set: {cards: cardIDs } },cb)
+                            }],
+                        function(err,data){
+                            res.json({"success":err == null})
+                        }
+                    );
                 })
             });
         })
