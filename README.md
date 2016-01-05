@@ -27,6 +27,11 @@ ReSpot is the result of us taking everything good from these systems and impleme
 ### API Usage
 
  * [Pearson Content API](http://developer.pearson.com/apis/dictionaries) - Provides Dictionaries for users to generate GRE study cards, English and other languages.
+ 
+  The dictionaries used were: 
+    * Longman Dictionary of Contemporary English (5th edition)
+    * Longman English-Chinese Dictionary of 100,000 Words (New 2nd Edition)
+
 
 ### Scope of Functionality 
 

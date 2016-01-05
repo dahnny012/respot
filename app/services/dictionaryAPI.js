@@ -32,7 +32,7 @@ Dictionary.prototype.randomQuery = function(){
 	var randomOffset = Math.floor(Math.random() * MAXSIZE);
 	request.push("https://api.pearson.com:443/v2/dictionaries/"+this.type+"/entries?offset="+randomOffset);
 	var request2= "&limit="+this.limit+"&apikey=QeCNmBeHtSGbfr1KfK8OCWC85w8scfsy";
-    return request.join();
+    return request.join()+request2;
 };
 
 Dictionary.prototype.search = function (wordsArray,cb) {
@@ -88,6 +88,7 @@ Dictionary.prototype.randomCards = function (amount,cb) {
 	needle.get(request ,function(error, response) {
 	    var data = response.body.results;
 	    if(data){
+	    	console.log(request);
 	    	console.log(data.length);
             data.forEach(function(e){
                 if(e.headword &&
