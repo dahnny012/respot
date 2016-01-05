@@ -17,7 +17,7 @@ ReSpot is the result of us taking everything good from these systems and impleme
 - Uses an SRS algorithm. 
 - Has a unique timeline for each user. 
 - Ability to add and delete cards, as well as decks in a centralized manner.
-- **Ability to generate cards using PEARSON dictionaries for vocabulary, tailored for English, GRE English and Chinese-English words.*
+- **Ability to generate cards using PEARSON dictionaries for vocabulary, tailored for English, GRE English and Chinese-English words.**
 
 
 ### Planning
@@ -60,23 +60,23 @@ Deploy easily by cloning the repo into a C9 (Cloud9 IDE) instance! Alternatively
 
 Node Server
 
-~~~~~~~~~~~~~~
+
 1. Navigate to `/app`
 2. Run `npm install`
 3. Make a mongo folder with `mkdir mongo`
-~~~~~~~~~~~~~~
+
 
 
 ### Deploy 
 
-~~~~~~~~~~~~~
 
-1. Give the file to to start mongo permissions, `chmod 667 scripts/mongoInit.sh` (sudo may be required)
+
+1. Give the file to to start mongo permissions, `chmod 667 scripts/mongoInit.sh` (`sudo` may be required)
 2. Start mongo, `./scripts/mongoInit.sh`
 3. Open a new terminal and navigate to `/app`
 3. Start the server with `npm start`
 
-~~~~~~~~~~~~~
+
 
 <!--
 The "Credit" section intends to highlight your team. Tell who contributed to what parts of the project. Give thanks to mentors that were helpful.

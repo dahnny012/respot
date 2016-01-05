@@ -82,6 +82,29 @@ Dictionary.prototype.randomCard = function (cb) {
 };
 
 
+Dictionary.prototype.randomCards = function (amount,cb) {
+	var request = this.randomQuery();
+	var buffer = [];
+	needle.get(request ,function(error, response) {
+	    var data = response.body.results;
+	    if(data){
+	    	console.log(data.length);
+            data.forEach(function(e){
+                if(e.headword &&
+                e.senses &&
+                e.senses.length > 0 && 
+                e.senses[0].translation){
+                    var word =  new Word(e.headword,e.senses[0].translation);
+                    buffer.push(word);
+                }
+                
+            })
+	    }
+	    cb(buffer);
+    });
+};
+
+
 function Word(word,def){
     this.word = word;
     this.def = def;

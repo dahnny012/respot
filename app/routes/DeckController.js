@@ -236,12 +236,12 @@ DeckController.prototype.newPearsonDeck=function(req,res){
         return words;
     } 
     
-    function randomEngWords(amount){
-        
-    }
     
-    function randomChineseWords(){
-        
+    function searchChineseDictionary(){
+        cindict.limit = POST.number || 20;
+        cindict.randomCards(POST.number || 20,function(results){
+            addToDB(results);
+        })
     }
 
     
@@ -318,7 +318,13 @@ DeckController.prototype.newPearsonDeck=function(req,res){
             });
         })
     }
-    searchDictionary();
+    if(POST.subtype == "gre" && POST.subtype == "eng"){
+        searchDictionary();
+    }else if(POST.subtype == "cn"){
+        searchChineseDictionary();
+    }else{
+        res.json({"success":false});
+;    }
 }
 
 

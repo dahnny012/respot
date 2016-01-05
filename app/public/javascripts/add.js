@@ -50,10 +50,6 @@ $(document).ready(function()
 {
    loadData('#card-subtype-choice');
    
-   $('#card-subtype-choice').append($("<option></option>")
-         .attr("value",'cn')
-         .text('English-Chinese'));
-   
    //bind event to the form modal
     $('#new-pearson-card').submit(function (evt) {
     evt.preventDefault();

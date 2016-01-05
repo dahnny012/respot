@@ -8,8 +8,14 @@ var data = [{
                {  
                  'displayName' : 'English Words',
                  'val' : 'eng',
-                 'desc' : 'A PEARSON Deck of English Words.'
-           }];
+                 'desc' : 'A PEARSON Deck of English Words from the Longman Dictionary of Contemporary English (5th Ed).'
+               },
+            {
+                'displayName' : 'English-Chinese Vocabulary', 
+                'val': 'cn', 
+                'desc' : "A PEARSON Deck of English-Chinese Words from the Longman English-Chinese Dictionary." 
+               }
+           ];
 
 function loadData(selector)
 {
