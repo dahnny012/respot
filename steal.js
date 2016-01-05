@@ -5,12 +5,14 @@ var reader = new Reader("gre.txt");
 var numLines = 4103;
 var maxLines = 4103;
 
+var buffer = [];
+
 reader.on('error', function (err) {
     // 'err' contains error object
 });
 
 reader.on('line', function (line) {
-	fillData(line);
+	buffer.push(line);
 	numLines--;
 	if(numLines === 0)
 	{
@@ -23,10 +25,3 @@ reader.on('line', function (line) {
 reader.on('end', function () {
     // All lines are read, file is closed now.
 });
-
-
-
-function fillData(line)
-{
-	buffer.push(line);
-}

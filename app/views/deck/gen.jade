@@ -1,0 +1,13 @@
+div(class="modal fade", id="gen-deck-modal", tabindex="-1", role="dialog", style="display: none;")
+    div.modal-dialog
+        div.formmodal-container
+            h2 Generate Deck
+            p.text-center Create a deck of cards in just one-click.
+            form(name="genDeck", id="gen-deck")
+                input(type='text', name='name', placeholder="Name of your Pearson Deck" required)
+                p Deck Type: 
+                    select(name='subtype' id='subtype-choice' onchange='updateDesc()')
+                p Number of starting cards:
+                    input(name="number" type="number", value=20 min="1" max="20" required)
+                input(type='hidden', name='description' id='subtype-desc' value="")
+                input(type='submit', value="Create PEARSON Deck", id="gen-deck-button" name="createDeck" class="form formmodal-submit")

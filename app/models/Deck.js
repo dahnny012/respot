@@ -10,7 +10,6 @@ function Deck(obj){
     this.cards = [];
     this.favorites = [];
     this.type = "deck"
-    
     for (var prop in obj) this[prop] = obj[prop];
 }
 

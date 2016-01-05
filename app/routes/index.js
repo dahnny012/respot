@@ -30,6 +30,11 @@ router.post('/deck/new', function(req, res, next) {
     else res.redirect("/");
 });
 
+router.post('/deck/pearson', function(req, res, next) {
+    if(req.session.user) DeckController.newPearsonDeck(req,res);
+    else res.redirect("/");
+});
+
 router.get('/deck/add/:deckID'+MongoIDRegex, function(req, res, next) {
     // TODO is this the owner?!?
     // Check if current user has the deck in their list of decks

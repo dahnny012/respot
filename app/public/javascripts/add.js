@@ -42,3 +42,12 @@ $(document).ready(function(){
 function setValID(id){
     currentDeckID = id;
 }
+
+
+//FOR PEARSON ADD CARDS
+
+$(document).ready(function()
+{
+   loadData('#subtype-choice');
+   console.log("PEARSON ADD FUNCTION LOADED.");
+});

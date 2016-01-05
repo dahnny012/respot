@@ -6,8 +6,12 @@ var Deck = require("../models/Deck");
 var Card = require("../models/Card");
 var SRS = require("../models/SRS");
 var ObjectId = require('mongodb').ObjectID;
-
 var async = require("async");
+
+var gre = require("../models/GRE");
+var dict = require("../services/dictionaryAPI")
+
+var MAXSIZE = 4102;
 
 function DeckController(){
         
@@ -138,6 +142,112 @@ DeckController.prototype.newDeck = function(req,res){
             res.redirect("/");
         });
     })
+}
+
+DeckController.prototype.newPearsonDeck=function(req,res){
+    var db = req.db;
+    var collection = db.get('respot');
+    var POST = req.body;
+    var user = req.session.user
+    
+    //Create a Pearson Deck
+    var deck = new Deck({
+        name:POST.name,
+        description:POST.description,
+        owner:user.username,
+        subtype:POST.subtype
+    })
+
+    var map = [];
+    function randomWords(amount){
+        var words =[];
+        while(words.length < amount){
+            var rando = gre[Math.floor(Math.random() * MAXSIZE)];
+            if(map.indexOf(rando) == -1){
+                map.push(rando);
+                words.push(rando);
+            }
+        }
+        return words;
+    } 
+
+    
+    var buffer = []
+    POST.number = POST.number || 20;
+    function searchDictionary(){
+        var cardsToGenerate = randomWords(POST.number);
+        dict.search(cardsToGenerate,function(words){
+            buffer = buffer.concat(words);
+            if(buffer.length < POST.number){
+                searchDictionary();
+            }
+            else{
+                res.json(buffer);
+                addToDB(words)
+            }
+        })
+    }
+    
+    function addToDB(){
+        var cards = words.map(function(e){
+            return new Card({
+                front:e.word,
+                back:e.def,
+                owner:user.username
+            });
+        })
+            
+        collection.insert(deck).then(function(deck){
+            // Create a map entry
+            var srsUpdate = {};
+            var DeckIDtoSRS = "srs."+deck._id;
+            srsUpdate[DeckIDtoSRS] = []
+            
+            // Add to decks + create SRS map entry
+            var params = { 
+                $addToSet: {decks: deck._id },
+                $set:srsUpdate
+            };
+            
+            // Add Deck to User Decks.
+            collection.update(
+            { _id: user._id },
+               params
+            ).then(function(){
+                collection.insert([cards],function(e,docs){
+                    var srsArr = docs.map(function(e){
+                        return new SRS({
+                            timer:new Date().valueOf(),
+                            flashcardID:e._id
+                        })
+                    });
+                
+                    var cardIDs = docs.map(function(e){
+                        return e._id;
+                    })
+                
+                
+                    async.parallel([
+                    // Set SRS queue;
+                    function(cb){
+                        var query = {};
+                        query["srs."+deck._id] = srsArr;
+                        collection.update( { _id: user._id },{$set:query},cb)
+                    },
+                    
+                    function(cb){
+                    // Update Deck Cards;
+                        collection.update(
+                            { _id: deck._id },{ $set: {cards: cardIDs } },cb)
+                        }],
+                    function(err,data){
+                        res.json({"success":err == null})
+                    });
+                })
+            });
+        })
+    }
+    searchDictionary();
 }
 
 

@@ -1,34 +1,12 @@
 # "ReSpot"
 
-
-<!--
-The "App Overview" section intends to be a high level description of your app. Think of what you might want to know if considering a purchase in an app store. 
--->
-
 ## App Overview
 
 "My Contest App" enables students to control notifications related to their classes from their cell phone. This improves their awareness of assignments and due dates through customizable alerts. It is proven that today's students are more tech savvy than ever. They expect to interact with classes in the same way as their social networks. "My Contest App" makes courses more mobile and social by doing something remarkable...
 
 ### Planning
 
-[See this project's hackathon entry page!](http://www.hackathon.io/pearson)
-
-### Demo
-
-[Watch a video of the application in action!](https://www.youtube.com/watch?v=8BFMaQjrw4s)
-
-### Screenshots
-
-![Login Screenshot](http://developer.pearson.com/sites/default/files/LSDashboard_Login_small.png)
-![Launch Screenshot](http://developer.pearson.com/sites/default/files/LSDashboard_NewActivity_small.png)
-![Settings Screenshot](http://developer.pearson.com/sites/default/files/LSDashboard_Settings_small.png)
-
-
-<!--
-The "App Details" section intends to explain how your app works. Describe the major components, what APIs were used, and what is missing to make this production ready.
--->
-
-## App Details
+[See this project's devPost entry page!](http://devpost.com/software/respot-nwi1s5)
 
 
 
@@ -42,9 +20,6 @@ The "App Details" section intends to explain how your app works. Describe the ma
 
 This application is mostly functional. The number of users able to use this application is limited by shortcuts taken for data storage. These were necessary to finish by the deadline, but replacing the temporary data store with a more scaleble solution would make this application ready for prime time!
 
-<!--
-The "Prerequisites" section intends to assist someone get started with your source code. They might not be familar with your frameworks or project structure. Help them out by explaining what you already know. 
--->
 
 ## Prerequisites
 
@@ -79,9 +54,9 @@ PORT={Port of your choosing}
 Node Server
 
 ~~~~~~~~~~~~~~
-1. Navigate to /app
-2. Run "npm install"
-3. Make a mongo folder by "mkdir mongo"
+1. Navigate to `/app`
+2. Run `npm install`
+3. Make a mongo folder with `mkdir mongo`
 ~~~~~~~~~~~~~~
 
 
@@ -89,9 +64,10 @@ Node Server
 
 ~~~~~~~~~~~~~
 
-1. Give the file to to start mongo permissions, "chmod 667 scripts/mongoInit.sh"
-2. Start mongo, "./scripts/mongoInit.sh"
-3. On a seperate terminal start the server "npm start"
+1. Give the file to to start mongo permissions, `chmod 667 scripts/mongoInit.sh` (sudo may be required)
+2. Start mongo, `./scripts/mongoInit.sh`
+3. Open a new terminal and navigate to `/app`
+3. Start the server with `npm start`
 
 ~~~~~~~~~~~~~
 
@@ -105,12 +81,12 @@ The "Credit" section intends to highlight your team. Tell who contributed to wha
 
 This project was a collaborative effort. We are all friends at the University of Minnesota Twin Cities.
 
- * [Danh Nguyen](#) - Lead Full-Stack Developer
- * [Wen Chuan Lee](#) - Full-Stack Developer
+ * [Danh Nguyen](https://github.com/dahnny012) - Lead Full-Stack Developer
+ * [Wen Chuan Lee](https://github.com/leewc) - Full-Stack Developer
 
 ### Other
 
-This project would have not been possible without ![C9.io](https://c9.io).
+This project would have not been possible without [C9.io](https://c9.io).
 
 <!--
 The "License" section intends to be a license declaration. Checkout choosealicence.com to become familar with different licences. The full license should be included in the LICENSE file, but you can also declare and link to it here.
