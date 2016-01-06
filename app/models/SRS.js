@@ -26,7 +26,7 @@ SRS.prototype.newTimer =function(answer){
             coef = 1;
         }
         this.correct++;
-        this.timer = new Date().valueOf()  + coef * HOUR;
+        this.timer = new Date().valueOf()  + coef * 4 * HOUR;
     }
     else{ 
         this.wrong++;

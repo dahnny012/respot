@@ -1,5 +1,7 @@
 // Abstract controller
 
+
+var async = require("async");
 function Controller(){
 
 }
@@ -18,6 +20,22 @@ Controller.prototype.retrieve = function(req,ids){
     return collection.find({
         '_id': { $in: ids}
     })
+}
+
+Controller.prototype.bulkByID = function(req,ids,cb){
+    var db = req.db;
+    var collection = db.get('respot');
+    var buffer = [];
+    
+    async.map(ids, 
+    function(e,cb){
+        collection.findById(e,function(e,doc){
+            cb(null,doc);
+        })
+    }
+    , function(err, results){
+        cb(results);
+    });
 }
 
 Controller.prototype.update = function(){
