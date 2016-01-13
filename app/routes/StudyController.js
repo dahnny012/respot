@@ -30,16 +30,11 @@ StudyController.prototype.stats = function(req,res){
         var flashcardIDs = user.history.map(function(e){
             return ObjectId(e.flashcardID);
         })
-        controller.retrieve(req,flashcardIDs).then(function(flashcards){
+        controller.bulkByID(req,flashcardIDs,function(flashcards){
             for (var i = 0; i < user.history.length; i++) {
                 user.history[i].flashcard = flashcards[i];
             }
-            
             res.render("study/stats",{srs:user.history.reverse()});
-                //var target = {"_id":user._id};
-                //var query = {"$set":{"history":[]}};
-                //collection.update(target,query);
-                //res.render("study/stats",{srs:false});
         });
     });
 }
