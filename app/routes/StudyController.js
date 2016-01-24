@@ -99,14 +99,15 @@ StudyController.prototype.study = function(req,res){
         user = doc
         var queue = user.srs[deckID];
         var reviewQueue = controller.getReviewQueue(queue);
-        
+
         if(reviewQueue.length == 0){
             res.redirect('/');
             return;
         }
-    
         controller.retrieve(req,reviewQueue.map(function(e){return e.flashcardID}))
         .then(function(docs){
+            shuffle(reviewQueue,docs);
+            
             res.render("newStudy",{flashcards:JSON.stringify(docs),
                                 srs:JSON.stringify(reviewQueue)});  
         })
@@ -122,6 +123,28 @@ StudyController.prototype.getReviewQueue= function(queue){
             reviewQueue.push(queue[i])
     }
     return reviewQueue;
+}
+
+function shuffle(array,array2) {
+    var counter = array.length, temp, index,temp2;
+
+    // While there are elements in the array
+    while (counter > 0) {
+        // Pick a random index
+        index = Math.floor(Math.random() * counter);
+
+        // Decrease counter by 1
+        counter--;
+
+        // And swap the last element with it
+        temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
+        
+        temp2 = array2[counter];
+        array2[counter] = array2[index];
+        array2[index] = temp2;
+    }
 }
 
 
