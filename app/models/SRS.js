@@ -30,7 +30,7 @@ SRS.prototype.newTimer =function(answer){
     }
     else{ 
         this.wrong++;
-        this.timer =  new Date().valueOf()  + MINUTE;
+        this.timer =  new Date().valueOf();
     }
 }
 

@@ -8,7 +8,6 @@ All flashcard systems (such as Anki, Quizlet) today all work, but each of them h
 
 ReSpot is the result of us taking everything good from these systems and implementing all the features that they lack, leaving only what's necessary and great.
 
-
 ### ReSpot has:
 - Beautiful, minimal UI
 - Accessible from everywhere
