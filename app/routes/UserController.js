@@ -6,11 +6,10 @@ var Registration = require("../models/Registration");
 
 
 // Factories
-var DeckControllerFactory = require("./DeckController");
+var DeckController= require("./DeckController");
 var StudyControllerFactory = require("./StudyController");
 
-// Make them controllers
-var DeckController = new DeckControllerFactory();
+
 var StudyController = new StudyControllerFactory();
 var async = require("async");
 

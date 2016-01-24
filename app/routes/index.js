@@ -3,7 +3,7 @@ var router = express.Router();
 
 // Factories
 var UserControllerFactory = require("./UserController");
-var DeckControllerFactory = require("./DeckController");
+var DeckController = require("./DeckController");
 var StudyControllerFactory = require("./StudyController");
 var CardControllerFactory = require("./CardController");
 
@@ -11,7 +11,6 @@ var CardControllerFactory = require("./CardController");
 
 // Singletons not really. Iono im a pleb
 var UserController = new UserControllerFactory();
-var DeckController = new DeckControllerFactory();
 var StudyController = new StudyControllerFactory();
 var CardController = new CardControllerFactory();
 var QuizletDeckController=  require("./QuizletDeckController");

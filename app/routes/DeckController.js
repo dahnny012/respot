@@ -214,6 +214,7 @@ DeckController.prototype.newPearsonDeck=function(req,res){
     var collection = db.get('respot');
     var POST = req.body;
     var user = req.session.user
+    var self = this;
     
     //Create a Pearson Deck
     var deck = new Deck({
@@ -267,55 +268,8 @@ DeckController.prototype.newPearsonDeck=function(req,res){
                 owner:user.username
             });
         })
-        
-        collection.insert(deck).then(function(deck){
-            // Create a map entry
-            var srsUpdate = {};
-            var DeckIDtoSRS = "srs."+deck._id;
-            srsUpdate[DeckIDtoSRS] = []
-            
-            // Add to decks + create SRS map entry
-            var params = { 
-                $addToSet: {decks: deck._id },
-                $set:srsUpdate
-            };
-            
-            // Add Deck to User Decks.
-            collection.update(
-            { _id: user._id },
-               params
-            ).then(function(){
-                collection.insert(cards,function(e,docs){
-                    var srsArr = docs.map(function(e){
-                        return new SRS({
-                            timer:new Date().valueOf(),
-                            flashcardID:e._id
-                        })
-                    });
-                
-                    var cardIDs = docs.map(function(e){
-                        return e._id;
-                    })
-
-                    async.parallel([
-                        // Set SRS queue;
-                        function(cb){
-                            var query = {};
-                            query["srs."+deck._id] = srsArr;
-                            collection.update( { _id: user._id },{$set:query},cb)
-                        },
-                        
-                        function(cb){
-                        // Update Deck Cards;
-                            collection.update(
-                                { _id: deck._id },{ $set: {cards: cardIDs } },cb)
-                            }],
-                        function(err,data){
-                            res.json({"success": e})
-                        }
-                    );
-                })
-            });
+        self.insertDeck(user,deck,collection).then(function(){
+            self.insertCards(user,deck,cards,res,collection);
         })
     }
     if(POST.subtype == "gre" || POST.subtype == "eng"){
@@ -326,6 +280,65 @@ DeckController.prototype.newPearsonDeck=function(req,res){
         console.log("wtf");
         res.json({"success":false});
 ;    }
+}
+
+
+
+DeckController.prototype.insertDeck= function(user,deck,collection){
+    return collection.insert(deck).then(function(deckDoc){
+        // Create a map entry
+        deck._id = deckDoc._id;
+        var srsUpdate = {};
+        var DeckIDtoSRS = "srs."+deck._id;
+        srsUpdate[DeckIDtoSRS] = []
+        
+        // Add to decks + create SRS map entry
+        var params = { 
+            $addToSet: {decks: deck._id },
+            $set:srsUpdate
+        };
+        
+        // Add Deck to User Decks.
+        return collection.update(
+        { _id: user._id },
+           params
+        )
+    })
+}
+
+
+DeckController.prototype.insertCards=function(user,deck,cards,res,collection){
+    collection.insert(cards,function(e,docs){
+        var srsArr = docs.map(function(e){
+            return new SRS({
+                timer:new Date().valueOf(),
+                flashcardID:e._id
+            })
+        });
+    
+        var cardIDs = docs.map(function(e){
+            return e._id;
+        })
+
+        async.parallel([
+            // Set SRS queue;
+            function(cb){
+                var query = {};
+                query["srs."+deck._id] = srsArr;
+                collection.update( { _id: user._id },{$set:query},cb)
+            },
+            
+            function(cb){
+            // Update Deck Cards;
+                collection.update(
+                    { _id: deck._id },{ $set: {cards: cardIDs } },cb)
+                }],
+            function(err,data){
+                res.redirect("/");
+            }
+        );
+    })
+    
 }
 
 // Helpers 
@@ -339,4 +352,4 @@ function StudyQueueAdd(deckID,srs){
 
 
 
-module.exports = DeckController;
+module.exports = new  DeckController();
