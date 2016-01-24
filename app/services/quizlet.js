@@ -3,14 +3,17 @@ var get = promise.promisify(require("needle").get);
 var Deck = require("../models/Deck");
 var Card = require("../models/Card");
 
-
 function Quizlet(){
     this.key = "client_id=YpEaJ6BC5P";
     this.base = "https://api.quizlet.com/2.0";
     var self = this;
 
-    this.searchSets=function(query){
-        var query = "https://api.quizlet.com/2.0/search/sets?q="+query+"&"+self.key;
+    this.searchSets=function(query,page){
+        if(page == undefined)
+            page = 1;
+        var query = "https://api.quizlet.com/2.0/search/sets?q="+query+
+                                                        "&page="+page+"&"+
+                                                        self.key;
         return get(query)
     }
     

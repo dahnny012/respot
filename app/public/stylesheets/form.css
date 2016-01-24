@@ -16,6 +16,11 @@
   font-family: roboto;
 }
 
+
+
+.big{
+  max-width:500px;
+}
 .formmodal-container h2 {
     text-align: center;
     font-size: 2.5em;
@@ -98,7 +103,6 @@
   font-weight: 400;
   text-align: center;
   display: inline-block;
-  opacity: 0.6;
   transition: opacity ease 0.5s;
 } 
 
@@ -108,4 +112,8 @@
 
 .error{
   color: red;
+}
+
+.search-item{
+    width:100%;
 }

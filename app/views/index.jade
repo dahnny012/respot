@@ -10,6 +10,7 @@ html
         script(src="javascripts/login.js")
         script(src="javascripts/register.js")
         script(src="javascripts/gen.js")
+        script(src="../javascripts/quizlet.js")
         link(href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css')
 
     if user 
@@ -51,6 +52,8 @@ html
                     li(class="list-group-item")
                       a(data-toggle="modal", data-target='#new-deck-modal' class="btn btn-primary action-buttons" href="#") + Create a New Deck
                       a(data-toggle="modal", data-target='#gen-deck-modal' class="btn btn-primary action-buttons" href="#") + Create a New PEARSON Deck
+                      a(data-toggle="modal", data-target='#quizlet-deck-modal' class="btn btn-primary action-buttons" href="#") + Search Quizlet
+                      
     else 
       body(class="full" style="display:flex; justify-content:center; align-items:center;")
           if error 
@@ -69,6 +72,7 @@ html
     include ./deck/new.jade
     include ./deck/add.jade
     include ./deck/addPearson.jade
+    include ./deck/quizlet.jade
     include ./deck/gen.jade
     include ./user/login.jade
     include ./user/register.jade

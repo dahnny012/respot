@@ -8,17 +8,24 @@ var StudyControllerFactory = require("./StudyController");
 var CardControllerFactory = require("./CardController");
 
 
-// Singletons not really.
 
+// Singletons not really. Iono im a pleb
 var UserController = new UserControllerFactory();
 var DeckController = new DeckControllerFactory();
 var StudyController = new StudyControllerFactory();
 var CardController = new CardControllerFactory();
+var QuizletDeckController=  require("./QuizletDeckController");
 
 
 // Courtesy of http://stackoverflow.com/a/11260389
 var MongoIDRegex = '([0-9a-f]{24})/';
 
+
+/*
+==========
+Decks
+=========
+*/
 
 router.get('/deck/:deckID'+MongoIDRegex, function(req, res, next) {
     if(req.session.user) DeckController.index(req,res);
@@ -50,8 +57,15 @@ router.post('/deck/add/:deckID'+MongoIDRegex, function(req, res, next) {
 });
 
 
+router.get('/deck/quizlet/search/', QuizletDeckController.search);
 
 
+
+/*
+==========
+Study
+=========
+*/
 
 router.post('/study/:deckID'+MongoIDRegex, function(req, res, next) {
     // TODO is this the owner?!?
@@ -86,7 +100,11 @@ router.get('/study/stats', function(req,res,next){
 
 
 
-
+/*
+==========
+User
+=========
+*/
 router.get('/user/login', function(req, res, next) {
     res.render('/');   
 });
@@ -98,6 +116,13 @@ router.get('/user/register', function(req, res, next) {
 });
 
 router.post('/user/register',UserController.register);
+
+
+/*
+==========
+Cards
+=========
+*/
 
 router.get('/card/:'+MongoIDRegex, function(req, res, next) {
     if(req.session.user) res.end("Yah ok.");
@@ -113,6 +138,10 @@ router.post('/card/delete/:cardID'+MongoIDRegex, function(req, res, next) {
     if(req.session.user) CardController.delete(req,res);
     else res.redirect("/");
 });
+
+
+
+
 
 router.get('/', function(req, res, next) {
   // User is Not Logged in.
