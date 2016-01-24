@@ -17,7 +17,7 @@ html
                   // -Time Line Element-
                   .timeline-badge.up
                     i.fa.fa-check
-                  .timeline-panel
+                  .timeline-panel(class=moment(value.timer).fromNow().indexOf("ago") > 0 ? "past" : "")
                     .timeline-heading
                       .timeline-title #{value.flashcard.front}
                     .timeline-body
@@ -28,7 +28,7 @@ html
                   // -Time Line Element-
                   .timeline-badge.down
                     i.fa.fa-minus-circle
-                  .timeline-panel
+                  .timeline-panel(class=moment(value.timer).fromNow().indexOf("ago") > 0 ? "past" : "")
                     .timeline-heading
                       .timeline-title #{value.flashcard.front}
                     .timeline-body

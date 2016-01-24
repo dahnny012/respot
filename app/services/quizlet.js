@@ -1,6 +1,7 @@
 var promise = require("bluebird");
 var get = promise.promisify(require("needle").get);
 var Deck = require("../models/Deck");
+var Card = require("../models/Card");
 
 
 function Quizlet(){
@@ -10,39 +11,39 @@ function Quizlet(){
 
     this.searchSets=function(query){
         var query = "https://api.quizlet.com/2.0/search/sets?q="+query+"&"+self.key;
-        console.log(query);
         return get(query)
     }
     
-    
-    this.getSet=function(id){
+    this._getSet=function(id){
         var query = "https://api.quizlet.com/2.0/sets/"+id+"?"+self.key;
-        console.log(query);
         return get(query)
-    } 
+    }
     
+    this._getDeck = function(id){
+        return this._getSet(id).then(function(res,err){
+            var set = res.body;
+            return adapter.quizToRespot(set);  
+        })
+    }
     
-    
+    this.helpers = {
+        printTitle: function(json){
+            json.forEach(function printTitle(e){
+                console.log(e.title);
+            })
+        },
+        printTerms: function(set){
+            set.terms.forEach(function printTerms(e){
+                console.log(e.term);
+                console.log(e.definition);
+            })
+        }
+    }
 }
 
 var quiz = new Quizlet();
-var quizset = new QuizletSets();
+var adapter = new QuizletAdapter();
 
-// Static
-function QuizletSets(set){
-    this._printTitles = function(json){
-        json.forEach(function printTitle(e){
-            console.log(e.title);
-        })
-    },
-    
-    this._printTerms = function(set){
-        set.terms.forEach(function printTerms(e){
-            console.log(e.term);
-            console.log(e.definition);
-        })   
-    }
-}
 
 
 // Example Model class shit i care about
@@ -71,26 +72,13 @@ function QuizletAdapter(){
         // return a new set adapted for respot
         var respot = {
             deck:new Deck({name:set.title,description:set.description}),
-            cards:[]
+            cards:set.terms.map(function toCards(e){
+                return new Card({front:e.term,back:e.definition})
+            })
         }
-        
-        
-        respot.cards = set.terms.map(function toCards(e){
-            
-        })
-        
         return respot;
     }
 }
 
 
-quiz.searchSets("genki").then(function(res,err){
-    var json = res.body;
-    var sets = json.sets;
-    var id = sets[0].id;
-    quiz.getSet(id).then(function(res,err){
-        var set = res.body;
-        quizset._printTerms(set);
-    })
-    
-})
+module.exports = quiz;
