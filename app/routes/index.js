@@ -59,6 +59,8 @@ router.post('/deck/add/:deckID'+MongoIDRegex, function(req, res, next) {
 
 router.get('/deck/quizlet/search/', QuizletDeckController.search);
 
+router.get('/deck/quizlet/create/:id', QuizletDeckController.create);
+
 
 
 /*

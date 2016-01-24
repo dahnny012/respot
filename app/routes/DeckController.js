@@ -328,7 +328,6 @@ DeckController.prototype.newPearsonDeck=function(req,res){
 ;    }
 }
 
-
 // Helpers 
 function StudyQueueAdd(deckID,srs){ 
     var srsUpdate = {};

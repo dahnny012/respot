@@ -22,7 +22,7 @@ function Quizlet(){
         return get(query)
     }
     
-    this._getDeck = function(id){
+    this.getDeck = function(id){
         return this._getSet(id).then(function(res,err){
             var set = res.body;
             return adapter.quizToRespot(set);  
