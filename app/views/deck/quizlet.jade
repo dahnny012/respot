@@ -4,14 +4,13 @@ div(class="modal fade", id="quizlet-deck-modal", tabindex="-1", role="dialog", s
             h1 Search Quizlet
             form(id="quizlet-search")
                 input(type="text",name='q', placeholder="Search term" required)
-                input(type="hidden" name="page" value=1)
                 input(type='submit', value="Search" class="form formmodal-submit")
                 nav
              ul.pager
                 li
-                    a(href='#') Previous
+                    a(href='#' id="search-previous") Previous
                 li
-                    a(href='#') Next
+                    a(href='#' id="search-next") Next
             .list-group(id="search-results")
 
                 

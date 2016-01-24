@@ -2,6 +2,7 @@
     var base = "/deck/quizlet";
     var search = base+"/search";
     var create = base+"/create";
+    var page = 1
 
     function formData(id){
         var data = {}
@@ -15,10 +16,26 @@
     
     $(document).ready(function(){
         //bind event to the form modal
+        $('#search-next').click(function () {
+            page++;
+            getResults()
+        })
+        
+         $('#search-previous').click(function () {
+            page--;
+            if(page < 1) page = 1
+            getResults()
+        })
+        
+
         $('#quizlet-search').submit(function (evt) {
             evt.preventDefault();
+            getResults();
+        });
+        
+        function getResults(){
             var data = formData('#quizlet-search');
-            
+            data["page"] = page;
             $.get(search,data,function(json){
                 var deck = json.sets;
                 var html = [];
@@ -28,7 +45,7 @@
                 
                 $("#search-results").html(html.join(""));
             });
-        });
+        }
     })
     
     function searchResult(data){
