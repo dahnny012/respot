@@ -53,10 +53,11 @@ html
                           li(class="list-group-item")
                             .progress
                               .progress-bar.progress-bar-success(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='width: #{parseInt(card.srs.correct)/(parseInt(card.srs.correct)+parseInt(card.srs.wrong)) * 100}%;')
-                                span #{(parseInt(card.srs.correct)/(parseInt(card.srs.correct)+parseInt(card.srs.wrong))).toFixed(2) * 100}% Correct
+                                span #{(parseInt(card.srs.correct)/(parseInt(card.srs.correct)+parseInt(card.srs.wrong))).toFixed(2) * 100}% Recognized
                             .progress
-                              .progress-bar.progress-bar-danger(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='width: #{parseInt(card.srs.wrong)/(parseInt(card.srs.correct)+parseInt(card.srs.wrong)) * 100}%;')
-                                span #{(parseInt(card.srs.wrong)/(parseInt(card.srs.correct)+parseInt(card.srs.wrong))).toFixed(2) * 100}% Wrong
+                              .progress-bar.progress-bar-success(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='width: #{parseInt(card.srs.correct)/(parseInt(card.srs.correct)+parseInt(card.srs.wrong)) * 100}%;')
+                                span #{(parseInt(card.srs.recallCorrect)/(parseInt(card.srs.recallCorrect)+parseInt(card.srs.recallWrong))).toFixed(2) * 100}% Recalled
+                                
                           li(class="list-group-item")
                             a(data-toggle="modal", data-target='#edit-card-modal', class="btn btn-primary action-buttons", href="#", onClick="editCardData(#{index})") Edit Card
                             a(class="btn btn-danger action-buttons" onClick="deleteCard(#{index})") Delete Card
