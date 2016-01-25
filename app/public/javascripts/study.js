@@ -1,6 +1,7 @@
 var curIndex; //holds the current card index
 var displayFront;
 var moveNext;
+var subtype = "recognize";
 
 //gimme a sec ok 
 
@@ -14,7 +15,7 @@ function init()
     curIndex = 0;
     displayFront = true;
     moveNext = false;
-    loadCardData(curIndex);
+    flipDispatcher()
     flipLogic();
 }
 
@@ -36,6 +37,7 @@ function sendResult(isTrue)
     $('.flashcard').toggleClass('flipped').promise().done(function() {
         var target = srs[curIndex];
         target.answer = isTrue;
+        target.subtype = subtype;
         $.post("",target,function(msg){
             // console.log(msg);
         })
@@ -66,7 +68,20 @@ function loadNextData()
             $("body").css("background-color",getNextColor());
         }
     }
-    loadCardData(curIndex);
+    
+    flipDispatcher()
+
+}
+
+function flipDispatcher(){
+    if(srs[curIndex].recallCorrect < srs[curIndex].correct){
+        subtype = "recall";
+        loadRecallCardData(curIndex);
+    }
+    else{
+        subtype = "recognize";
+        loadCardData(curIndex);
+    }
 }
 
 //update the html for front and back.
@@ -80,6 +95,21 @@ function loadCardData(index)
     else 
     {
         $('.theatre-area').text(flashcards[index].back);
+        displayFront = true;
+        moveNext = true;
+    }
+}
+
+function loadRecallCardData(index)
+{
+    if(displayFront)
+    {
+        $('.theatre-area').text(flashcards[index].back);
+        displayFront = false;
+    }
+    else 
+    {
+        $('.theatre-area').text(flashcards[index].front);
         displayFront = true;
         moveNext = true;
     }

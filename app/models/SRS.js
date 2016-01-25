@@ -26,12 +26,13 @@ SRS.prototype.newTimer =function(answer){
 
     this.answer = answer
     if(answer == 'true'){
-        var coef = (this.correct - this.wrong);
+        var coef = ((this.correct+this.recallCorrect) - (this.wrong+this.recallWrong));
         if(coef < 1){
             coef = 1;
         }
         this.updateScore("+");
-        this.timer = new Date().valueOf()  + coef * 4 * HOUR;
+        //this.timer = new Date().valueOf()  + coef * 4 * HOUR;
+        this.timer =  new Date().valueOf();
     }
     else{ 
         this.updateScore("-");

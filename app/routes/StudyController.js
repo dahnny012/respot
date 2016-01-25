@@ -76,6 +76,9 @@ StudyController.prototype.evaluate = function(req,res){
     query["srs."+deckID+".$.answer"] = answer;
     query["srs."+deckID+".$.correct"] = srs.correct;
     query["srs."+deckID+".$.wrong"] = srs.wrong;
+    query["srs."+deckID+".$.recallCorrect"] = srs.recallCorrect;
+    query["srs."+deckID+".$.recallWrong"] = srs.recallWrong;
+
     // mongo op courtesy of 
     // http://mongoblog.tumblr.com/post/21792332279/updating-one-element-in-an-array
     collection.update(target, {"$set" : query},function(e){
