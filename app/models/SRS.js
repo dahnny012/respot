@@ -27,11 +27,11 @@ SRS.prototype.newTimer =function(answer){
     this.answer = answer
     if(answer == 'true'){
         this.updateScore("+");
-        this.timer = this.getTimer("+");
+        this.timer = this.algorithm();
     }
     else{ 
         this.updateScore("-");
-        this.timer =  this.getTimer("-");
+        this.timer =  this.algorithm();
     }
 }
 
@@ -56,18 +56,23 @@ SRS.prototype.updateScore = function(op){
 }
 
 // SRS Algorithm
-SRS.prototype.getTimer = function(op){
+SRS.prototype.algorithm = function(){
     var self = this;
     var targetCorrect;
     var targetWrong;
-    if(self.correct < self.recallCorrect){
+    if(self.correct <= self.recallCorrect){
         targetCorrect = self.correct;
         targetWrong = self.wrong;
     }else{
         targetCorrect = self.recallCorrect;
         targetWrong = self.recallWrong
     }
-    return new Date() + (4 * HOUR * targetCorrect-targetWrong);
+    
+    var coef = targetCorrect-targetWrong;
+    if(coef < 0)
+        coef = 0;
+    var timer = new Date().valueOf() + (4 * HOUR * coef);
+    return timer;
 }
 
 module.exports = SRS;
