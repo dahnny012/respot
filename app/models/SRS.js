@@ -26,17 +26,12 @@ SRS.prototype.newTimer =function(answer){
 
     this.answer = answer
     if(answer == 'true'){
-        var coef = ((this.correct+this.recallCorrect) - (this.wrong+this.recallWrong));
-        if(coef < 1){
-            coef = 1;
-        }
         this.updateScore("+");
-        //this.timer = new Date().valueOf()  + coef * 4 * HOUR;
-        this.timer =  new Date().valueOf();
+        this.timer = this.getTimer("+");
     }
     else{ 
         this.updateScore("-");
-        this.timer =  new Date().valueOf();
+        this.timer =  this.getTimer("-");
     }
 }
 
@@ -60,5 +55,19 @@ SRS.prototype.updateScore = function(op){
     handlers[key]();
 }
 
+// SRS Algorithm
+SRS.prototype.getTimer = function(op){
+    var self = this;
+    var targetCorrect;
+    var targetWrong;
+    if(self.correct < self.recallCorrect){
+        targetCorrect = self.correct;
+        targetWrong = self.wrong;
+    }else{
+        targetCorrect = self.recallCorrect;
+        targetWrong = self.recallWrong
+    }
+    return new Date() + (4 * HOUR * targetCorrect-targetWrong);
+}
 
 module.exports = SRS;
