@@ -12,6 +12,8 @@ var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/mongo');
 
+var passport = require("passport");
+
 
 var app = express();
 

@@ -14,6 +14,7 @@ var UserController = new UserControllerFactory();
 var StudyController = new StudyControllerFactory();
 var CardController = new CardControllerFactory();
 var QuizletDeckController=  require("./QuizletDeckController");
+var AuthController = require("./AuthController");
 
 
 // Courtesy of http://stackoverflow.com/a/11260389
@@ -118,6 +119,7 @@ router.get('/user/register', function(req, res, next) {
 
 router.post('/user/register',UserController.register);
 
+router.get('/user/logout', UserController.logout);
 
 /*
 ==========
@@ -126,7 +128,7 @@ Cards
 */
 
 router.get('/card/:'+MongoIDRegex, function(req, res, next) {
-    if(req.session.user) res.end("Yah ok.");
+    if(req.session.user) res.end("Yah ok.")
     else res.redirect("/");
 });
 

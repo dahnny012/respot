@@ -58,14 +58,14 @@ UserController.prototype.register = function(req,res,body){
     var controller = this;
     collection.find({"username":POST.user},function(e,docs){
         if(docs.length == 0){
-            // Creates a Model.Registration
+            // Creates a Model.Registratio
             collection.insert(new Registration({
                 username:POST.user,
                 password:POST.pass
             }));
             
             
-            // Creates a Model.User
+            // Creates a Model.Use
             collection.insert(new User({username:POST.user}))
             .then(function(doc){
                 SESSION.user = doc;
@@ -98,6 +98,11 @@ UserController.prototype.login = function(req,res,body){
         res.json({success:false,"error":LOGINERROR});
         }
     });
+}
+
+UserController.prototype.logout = function(req, res, body){
+    req.logout();
+    res.redirect('/');
 }
 
 module.exports = UserController;
