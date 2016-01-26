@@ -104,6 +104,7 @@ UserController.prototype.login = function(req,res,body){
 }
 
 UserController.prototype.generateHash = function(password) {
+    //salt + hash
     return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
 };
 
