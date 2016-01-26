@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var routes = require('./routes/index');
+var device = require('express-device');
 
 
 var mongo = require('mongodb');
@@ -29,6 +30,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
+
 //locals (for Jade)
 app.locals.moment = require('moment');
 
@@ -38,6 +40,7 @@ app.use(function(req,res,next){
     next();
 });
 
+app.use(device.capture());
 
 app.use('/', routes);
 

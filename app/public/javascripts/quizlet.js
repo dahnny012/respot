@@ -58,7 +58,7 @@
                        '<h4 class="list-group-item-heading">',data["title"],'<span class="badge">',
                         data["term_count"]
                        ,'</span></h4>',
-                       '<p class="list-group-item-text">',data["modified_date"],'</p>',
+                       '<p class="list-group-item-text">',data["modified_date"].toDateString(),'</p>',
                        '<p class="list-group-item-text">',data["description"],'</p>',
                         '</a>']
                         

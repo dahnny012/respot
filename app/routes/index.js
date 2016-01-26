@@ -26,6 +26,8 @@ Decks
 =========
 */
 
+
+
 router.get('/deck/:deckID'+MongoIDRegex, function(req, res, next) {
     if(req.session.user) DeckController.index(req,res);
     else res.redirect("/");
