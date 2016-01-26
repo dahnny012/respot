@@ -13,7 +13,6 @@ var StudyControllerFactory = require("./StudyController");
 var StudyController = new StudyControllerFactory();
 var async = require("async");
 
-
 var LOGINERROR = "Wrong Username/Password. Maybe it doesn't exist?";
 var REGISTERERROR = "Account already exists. Please try another name.";
 
@@ -49,35 +48,20 @@ UserController.prototype.index = function(req,res){
 UserController.prototype.update = function(req,user){
     
 }
-
 UserController.prototype.register = function(req,res,body){
     var POST = req.body;
     var SESSION = req.session;
-    var db = req.db;
-    var collection = db.get('respot');
-    var controller = this;
-    collection.find({"username":POST.user},function(e,docs){
-        if(docs.length == 0){
-            // Creates a Model.Registratio
-            collection.insert(new Registration({
-                username:POST.user,
-                password:POST.pass
-            }));
-            
-            
-            // Creates a Model.Use
-            collection.insert(new User({username:POST.user}))
-            .then(function(doc){
-                SESSION.user = doc;
-                res.json({"success":true}); 
-            })
-        }else{
-            //Failed to register
-            res.json({"success":false, "error": REGISTERERROR});
-        }
+    var passport = req.passport;
+    
+    console.log("register subroute called, body parsing: ", req.body);
+   
+    passport.authenticate('local', {
+        successRedirect : function() { console.log("YAY"); res.json({"success":true}); }, // redirect to the secure profile section
+        failureRedirect : '/signup', // redirect back to the signup page if there is an error
+        failureFlash : true // allow flash messages
     });
 }
-
+// old login, does not use passport.
 UserController.prototype.login = function(req,res,body){
     var POST = req.body;
     var SESSION = req.session;
@@ -98,6 +82,14 @@ UserController.prototype.login = function(req,res,body){
         res.json({success:false,"error":LOGINERROR});
         }
     });
+}
+
+//courtesy of http://code.tutsplus.com/tutorials/authenticating-nodejs-applications-with-passport--cms-21619
+//checks if user is Authenticated, if so call next, else kick them back to homepage
+UserController.prototype.isAuthenticated = function (req, res, next) {
+  if (req.isAuthenticated())
+    return next();
+  res.redirect('/');
 }
 
 UserController.prototype.logout = function(req, res, body){

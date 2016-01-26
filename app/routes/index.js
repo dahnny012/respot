@@ -14,7 +14,6 @@ var UserController = new UserControllerFactory();
 var StudyController = new StudyControllerFactory();
 var CardController = new CardControllerFactory();
 var QuizletDeckController=  require("./QuizletDeckController");
-var AuthController = require("./AuthController");
 
 
 // Courtesy of http://stackoverflow.com/a/11260389
@@ -117,7 +116,11 @@ router.get('/user/register', function(req, res, next) {
     res.render("user/register",{"session":req.session});
 });
 
-router.post('/user/register',UserController.register);
+router.post('/user/register',UserController.register, function (req, res) {
+ // req.user is now defined
+ console.log(req.user);
+ res.json({"success":true});
+});
 
 router.get('/user/logout', UserController.logout);
 
