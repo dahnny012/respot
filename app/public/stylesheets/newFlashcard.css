@@ -13,7 +13,7 @@ body{
 }
 
 #card-wrapper{
-  height:450px;
+  height:300px;
   text-align:center;
 }
 
@@ -37,4 +37,17 @@ body{
 
 .large: hover {
   color: white;
+}
+
+@media screen and (max-width: 768px) {
+    .large{
+      padding: 2.5em 2.5rem 2.5em 2.5em;
+      font-size: 2em;
+    }
+    
+    .white-text {
+      font-size: 1.5em;
+      color: white;
+    }
+  
 }

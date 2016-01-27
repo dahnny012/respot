@@ -4,7 +4,7 @@ div(class="modal fade", id="login-modal", tabindex="-1", role="dialog", style="d
             h2 ReSpot
             h1 Login to Your Account
             form(id="login", action="/user/login", method="post")
-                input(type='text', name='user' placeholder="Username" required)
+                input(type='text', name='user' autocomplete="off" placeholder="Username" required)
                 input(type='password', name='pass' placeholder="Password" required)
                 input(type='submit', value="Login" name="login" class="form formmodal-submit")
             div.form-help

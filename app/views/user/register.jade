@@ -3,7 +3,7 @@ div(class="modal fade", id="register-modal", tabindex="-1", role="dialog", style
         div.formmodal-container
             h1 Create your new account
             form(id="register", action="/user/register", method="post")
-                input(type='text', name='user' placeholder="New Username" required)
+                input(type='text', name='user' autocomplete="off" placeholder="New Username" required)
                 input(type='password', name='pass' placeholder="New Password" required)
                 input(type='submit', value="Register" name="login" class="form formmodal-submit")
             div.form-help
