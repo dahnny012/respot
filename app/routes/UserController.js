@@ -91,7 +91,7 @@ UserController.prototype.login = function(req,res,body){
     collection.find(registration,function(e,docs){
         // Found Login, check password if hashes match
         //TODO: somehow calling self.validpassword gives undefined (null error). 
-        if(docs.length == 1){
+        if(docs.length == 1 && UserController.prototype.validPassword(docs[0].password, POST.pass) ){
             collection.find(user,function(e,docs){
                 SESSION.user = docs[0];
                 res.json({"success":true});
