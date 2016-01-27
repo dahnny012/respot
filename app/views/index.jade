@@ -1,6 +1,7 @@
 html
     head
         title ReSpot - Home
+        meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
         link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", rel="stylesheet", integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==", crossorigin="anonymous")
         link(rel='stylesheet', href='/stylesheets/style.css')
         link(rel='stylesheet', href='/stylesheets/form.css')
@@ -66,8 +67,12 @@ html
              div.jumbotron(style="background:rgba(0,0,0,0); color:white;")
                 h1 ReSpot
                 h3 Go ahead and log in so we can send you on your way. 
-                a(data-toggle="modal", data-target="#login-modal" class="btn btn-primary action-buttons" href="#") Login
-                a(data-toggle="modal", data-target="#register-modal" class="btn btn-primary action-buttons" href="#") Register
+                .row
+                  .col-md-2.col-xs-6
+                    a(data-toggle="modal", data-target="#login-modal" class="btn btn-primary action-buttons btn-block" href="#") Login
+                  .col-md-2.col-xs-6
+                    a(data-toggle="modal", data-target="#register-modal" class="btn btn-primary action-buttons btn-block" href="#") Register
+
             
     include ./deck/new.jade
     include ./deck/add.jade
