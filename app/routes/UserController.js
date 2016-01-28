@@ -13,9 +13,11 @@ var StudyControllerFactory = require("./StudyController");
 var StudyController = new StudyControllerFactory();
 var async = require("async");
 
+//For security!
+var bcrypt = require('bcrypt-nodejs');
 
 var LOGINERROR = "Wrong Username/Password. Maybe it doesn't exist?";
-var REGISTERERROR = "Account already exists. Please try another name.";
+var REGISTERERROR = "Account already exists. Please try another username.";
 
 // The router contains the db connection among other things
 // See Monk.js
@@ -61,7 +63,7 @@ UserController.prototype.register = function(req,res,body){
             // Creates a Model.Registration
             collection.insert(new Registration({
                 username:POST.user,
-                password:POST.pass
+                password:UserController.prototype.generateHash(POST.pass)
             }));
             
             
@@ -84,11 +86,12 @@ UserController.prototype.login = function(req,res,body){
     var db = req.db;
     var collection = db.get('respot');
     var self = this;
-    var registration = {"username":POST.user,"password":POST.pass}
+    var registration = {"username":POST.user, "type": "registration"}
     var user = {"username":POST.user,"type":"user"}
     collection.find(registration,function(e,docs){
-        // Login Successful
-        if(docs.length == 1){
+        // Found Login, check password if hashes match
+        //TODO: somehow calling self.validpassword gives undefined (null error). 
+        if(docs.length == 1 && UserController.prototype.validPassword(docs[0].password, POST.pass) ){
             collection.find(user,function(e,docs){
                 SESSION.user = docs[0];
                 res.json({"success":true});
@@ -99,6 +102,15 @@ UserController.prototype.login = function(req,res,body){
         }
     });
 }
+
+UserController.prototype.generateHash = function(password) {
+    //salt + hash
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+};
+
+UserController.prototype.validPassword = function(stored, input) {
+    return bcrypt.compareSync(input, stored);
+};
 
 module.exports = UserController;
 

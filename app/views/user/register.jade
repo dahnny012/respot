@@ -5,6 +5,7 @@ div(class="modal fade", id="register-modal", tabindex="-1", role="dialog", style
             form(id="register", action="/user/register", method="post")
                 input(type='text', name='user' autocomplete="off" placeholder="New Username" required)
                 input(type='password', name='pass' placeholder="New Password" required)
+                input(type='password', name='retype' placeholder="Retype password so you won't forget." required)
                 input(type='submit', value="Register" name="login" class="form formmodal-submit")
             div.form-help
             a(data-toggle="modal", data-target="#login-modal" href="#" onclick="$('#register-modal').modal('hide')") Already have an account?
