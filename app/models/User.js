@@ -14,12 +14,10 @@ function User(obj){
 //called by an instance of Registration
 User.prototype.save = function(req, callback) {
     var db = req.db;
-    var SESSION = req.session;
     var collection = db.get('respot');
     
     // Creates a Model.Registration
     collection.insert(this).then(function(doc){
-        SESSION.user = doc;
         callback(null); //success
     });
 }

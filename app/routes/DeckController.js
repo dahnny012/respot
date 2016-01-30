@@ -32,7 +32,7 @@ DeckController.prototype.index = function(req,res){
     var POST = req.body
     var db = req.db;
     var collection = db.get('respot');
-    var user = req.session.user;
+    var user = req.user;
     var deckID = req.params.deckID;
     var self = this;
     
@@ -58,7 +58,7 @@ DeckController.prototype.addCard = function(req,res){
     var POST = req.body
     var db = req.db;
     var collection = db.get('respot');
-    var user = req.session.user;
+    var user = req.user;
     var deckID = req.params.deckID;
     
     // Create a card
@@ -151,7 +151,7 @@ DeckController.prototype.deleteDeck = function(req,res){
     var db = req.db;
     var collection = db.get('respot');
     var POST = req.body;
-    var user = req.session.user
+    var user = req.user
     // Delete a deck...
 
     var controller = this;
@@ -177,7 +177,7 @@ DeckController.prototype.newDeck = function(req,res){
     var db = req.db;
     var collection = db.get('respot');
     var POST = req.body;
-    var user = req.session.user
+    var user = req.user
     
     //Create the deck
     var deck = new Deck({
@@ -213,7 +213,7 @@ DeckController.prototype.newPearsonDeck=function(req,res){
     var db = req.db;
     var collection = db.get('respot');
     var POST = req.body;
-    var user = req.session.user
+    var user = req.user
     var self = this;
     
     //Create a Pearson Deck

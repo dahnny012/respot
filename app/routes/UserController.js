@@ -27,7 +27,7 @@ UserController.prototype = new Controller();
 
 // At this point they should be logged in.
 UserController.prototype.index = function(req,res){
-    var session = req.session.user;
+    var session = req.user;
     var db = req.db;
     var collection = db.get('respot');
 
@@ -46,7 +46,6 @@ UserController.prototype.index = function(req,res){
 
 UserController.prototype.register = function(req,res,next){
     var POST = req.body;
-    var SESSION = req.session;
     var passport = req.passport;
     
     passport.authenticate('local')(req, res,function(err){
@@ -59,7 +58,6 @@ UserController.prototype.register = function(req,res,next){
 
 UserController.prototype.login = function(req,res,next){
     var POST = req.body;
-    var SESSION = req.session;
     var passport = req.passport;
     
     passport.authenticate('local-login')(req, res,function(err){
@@ -70,38 +68,6 @@ UserController.prototype.login = function(req,res,next){
             res.json({"success":true});
     });
 }
-
-// old login, does not use passport.
-/*
-UserController.prototype.login = function(req,res,body){
-    var POST = req.body;
-    var SESSION = req.session;
-    var db = req.db;
-    var collection = db.get('respot');
-    var self = this;
-    var registration = {"username":POST.user,"password":POST.pass}
-    var user = {"username":POST.user,"type":"user"}
-    var passport = req.passport;
-    collection.find(registration,function(e,docs){
-        // Login Successful
-        if(docs.length == 1){
-            collection.find(user,function(e,docs){
-                SESSION.user = docs[0];
-                res.json({"success":true});
-            })
-        }else{
-        // Login Unsuccessful
-        res.json({success:false,"error":LOGINERROR});
-        }
-    });
-    
-        passport.authenticate('local')(req, res,function(err){
-        if(err)
-            res.json({"success":false, "error": err});
-        else
-            res.json({"success":true});
-    });
-}*/
 
 //courtesy of http://code.tutsplus.com/tutorials/authenticating-nodejs-applications-with-passport--cms-21619
 //checks if user is Authenticated, if so call next, else kick them back to homepage

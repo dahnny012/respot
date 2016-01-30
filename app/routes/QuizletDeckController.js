@@ -35,7 +35,7 @@ QuizletDeckController.prototype.create=function(req,res){
     var db = req.db;
     var collection = db.get('respot');
     var POST = req.body;
-    var user = req.session.user
+    var user = req.user
     
     quiz.getDeck(id).then(function(deckAndTerms,err){
         var deck = deckAndTerms.deck;
