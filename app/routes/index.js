@@ -106,6 +106,7 @@ router.get('/study/stats', function(req,res,next){
 User
 =========
 */
+
 router.get('/user/login', function(req, res, next) {
     res.render('/');   
 });
@@ -116,11 +117,7 @@ router.get('/user/register', function(req, res, next) {
     res.render("user/register",{"session":req.session});
 });
 
-router.post('/user/register',UserController.register, function (req, res) {
- // req.user is now defined
- console.log(req.user);
- res.json({"success":true});
-});
+router.post('/user/register',UserController.register)
 
 router.get('/user/logout', UserController.logout);
 
@@ -146,13 +143,9 @@ router.post('/card/delete/:cardID'+MongoIDRegex, function(req, res, next) {
 });
 
 
+router.get('/',UserController.isAuthenticated,UserController.index)
 
 
 
-router.get('/', function(req, res, next) {
-  // User is Not Logged in.
-  if(!req.session.user) res.render('index');
-  else UserController.index(req,res);
-});
 
 module.exports = router;

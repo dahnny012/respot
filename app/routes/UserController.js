@@ -2,7 +2,6 @@
 
 var Controller = require("./Controller");
 var User = require("../models/User");
-var Registration = require("../models/Registration");
 
 
 // Factories
@@ -45,23 +44,35 @@ UserController.prototype.index = function(req,res){
     });
 }
 
-UserController.prototype.update = function(req,user){
-    
-}
-UserController.prototype.register = function(req,res,body){
+UserController.prototype.register = function(req,res,next){
     var POST = req.body;
     var SESSION = req.session;
     var passport = req.passport;
     
-    console.log("register subroute called, body parsing: ", req.body);
-   
-    passport.authenticate('local', {
-        successRedirect : function() { console.log("YAY"); res.json({"success":true}); }, // redirect to the secure profile section
-        failureRedirect : '/signup', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
+    passport.authenticate('local')(req, res,function(err){
+        if(err)
+            res.json({"success":false, "error": err});
+        else
+            res.json({"success":true});
     });
 }
+
+UserController.prototype.login = function(req,res,next){
+    var POST = req.body;
+    var SESSION = req.session;
+    var passport = req.passport;
+    
+    passport.authenticate('local-login')(req, res,function(err){
+        console.log(err);
+        if(err)
+            res.json({"success":false, "error": err});
+        else
+            res.json({"success":true});
+    });
+}
+
 // old login, does not use passport.
+/*
 UserController.prototype.login = function(req,res,body){
     var POST = req.body;
     var SESSION = req.session;
@@ -70,6 +81,7 @@ UserController.prototype.login = function(req,res,body){
     var self = this;
     var registration = {"username":POST.user,"password":POST.pass}
     var user = {"username":POST.user,"type":"user"}
+    var passport = req.passport;
     collection.find(registration,function(e,docs){
         // Login Successful
         if(docs.length == 1){
@@ -82,14 +94,21 @@ UserController.prototype.login = function(req,res,body){
         res.json({success:false,"error":LOGINERROR});
         }
     });
-}
+    
+        passport.authenticate('local')(req, res,function(err){
+        if(err)
+            res.json({"success":false, "error": err});
+        else
+            res.json({"success":true});
+    });
+}*/
 
 //courtesy of http://code.tutsplus.com/tutorials/authenticating-nodejs-applications-with-passport--cms-21619
 //checks if user is Authenticated, if so call next, else kick them back to homepage
 UserController.prototype.isAuthenticated = function (req, res, next) {
   if (req.isAuthenticated())
     return next();
-  res.redirect('/');
+  res.render('index');
 }
 
 UserController.prototype.logout = function(req, res, body){
