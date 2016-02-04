@@ -25,8 +25,7 @@ CardController.prototype.update = function(req,res){
 
 CardController.prototype.delete = function(req,res){
     var POST = req.body;
-    var SESSION = req.session;
-    var user = SESSION.user;
+    var user = req.user;
     var db = req.db;
     var collection = db.get('respot');
     var cardID = req.params.cardID;

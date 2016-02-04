@@ -21,7 +21,7 @@ StudyController.prototype = new Controller();
 StudyController.prototype.stats = function(req,res){
     var db = req.db;
     var collection = db.get('respot');
-    var user = req.session.user;
+    var user = req.user;
     
 
     var controller = this;
@@ -43,7 +43,7 @@ StudyController.prototype.stats = function(req,res){
 StudyController.prototype.clearStats = function(req,res){
     var db = req.db;
     var collection = db.get('respot');
-    var user = req.session.user;
+    var user = req.user;
     var target = {"_id":user._id};
     var query = {"$set":{"history":[]}};
     collection.update(target,query);
@@ -53,7 +53,7 @@ StudyController.prototype.clearStats = function(req,res){
 StudyController.prototype.evaluate = function(req,res){
     var db = req.db;
     var collection = db.get('respot');
-    var user = req.session.user;
+    var user = req.user;
     var deckID = req.params.deckID;
     var POST = req.body
     var srs = new SRS(POST);

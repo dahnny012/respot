@@ -13,6 +13,9 @@ var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/mongo');
 
+var passport = require("passport");
+var auth = require("./config/Auth");
+auth.config(passport);
 
 var app = express();
 
@@ -26,7 +29,7 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(session({secret: 'crystal'}));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
@@ -34,9 +37,15 @@ app.use(express.static(path.join(__dirname, 'bower_components')));
 //locals (for Jade)
 app.locals.moment = require('moment');
 
-// Make our db accessible to our router
+//passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+// Make our db and passport accessible to our router
 app.use(function(req,res,next){
     req.db = db;
+    req.passport = passport;
     next();
 });
 
