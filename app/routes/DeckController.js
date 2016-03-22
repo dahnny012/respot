@@ -53,6 +53,14 @@ DeckController.prototype.index = function(req,res){
     })
 }
 
+DeckController.prototype.decks = function(req,res){
+    var POST = req.body
+    var db = req.db;
+    var collection = db.get('respot');
+    var user = req.user;
+    return collection.find({"owner":user.username,"type":"deck"});
+}
+
 
 DeckController.prototype.addCard = function(req,res){
     var POST = req.body
