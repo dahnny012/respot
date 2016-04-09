@@ -64,12 +64,12 @@ StudyController.prototype.evaluate = function(req,res){
     
     
     // Adding to history.
-    target = {"_id":ObjectId(user._id)};
+    target = {"_id":user._id};
     query = {"history":srs};
     collection.update(target, {"$addToSet" : query});
     
     
-    target = {"_id":ObjectId(user._id)};
+    target = {"_id":user._id};
     target["srs."+deckID+".flashcardID"] = ObjectId(srs.flashcardID);
     query = {};
     query["srs."+deckID+".$.timer"] = srs.timer;
