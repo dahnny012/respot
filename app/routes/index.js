@@ -20,6 +20,28 @@ var QuizletDeckController=  require("./QuizletDeckController");
 var MongoIDRegex = '([0-9a-f]{24})/';
 
 
+
+/*
+========
+API
+========
+*/
+
+router.get('/api',function(req,res,next){
+    res.json("Hello world");
+})
+
+router.get('/api/loggedIn',function(req,res,next){
+    res.json({"success":req.isAuthenticated()});
+})
+
+router.get("/api/decks/",function(req,res,next){
+    DeckController.decks(req,res).then(function(docs){
+        res.json(docs);
+    })  
+})
+
+
 /*
 ==========
 Decks
